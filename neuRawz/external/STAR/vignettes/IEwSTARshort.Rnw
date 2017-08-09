@@ -1,0 +1,1198 @@
+\documentclass[11pt,a4paper,english,utf8]{article}
+
+%%\VignetteIndexEntry{Intensity estimation with STAR}
+%%\VignetteDepends{STAR}
+
+\usepackage{newcent}
+\usepackage[T1]{fontenc}
+\usepackage{url}
+\usepackage{natbib}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsbsy}
+\usepackage{makeidx}
+\usepackage[colorlinks=TRUE,pagebackref=TRUE]{hyperref}
+
+%\geometry{verbose,a4paper,tmargin=2.5cm,bmargin=2.5cm,lmargin=3cm,rmargin=3cm}
+\geometry{verbose,a4paper}
+\addtolength{\marginparwidth}{1cm}
+\addtolength{\hoffset}{-0.5cm}
+
+\newtheorem{mydef}{Definition}
+
+% General keywords
+\newcommand{\RPlot}{\emph{raster plot}\index{raster plot}}
+\newcommand{\CPlot}{\emph{counting process plot}\index{counting process plot}}
+\newcommand{\ISI}{\emph{inter spike interval}\index{inter spike interval}}
+\newcommand{\isi}{\emph{isi}\index{isi}}
+\newcommand{\CCH}{\emph{cross-correlation histogram}\index{cross-correlation histogram}}
+\newcommand{\CIP}{\emph{cross-intensity plot}\index{cross-intensity plot}}
+\newcommand{\PSTH}{\emph{peri stimulus time histogram}\index{peri stimulus time histogram}}
+\newcommand{\psth}{\emph{psth}\index{peri stimulus time histogram}}
+\newcommand{\GSSPSTH}{\emph{smooth peri stimulus time histogram}\index{smooth peri stimulus time histogram}}
+\newcommand{\gsspsth}{\emph{spsth}\index{smooth peri stimulus time histogram}}
+\newcommand{\HPproc}{\emph{homogenous Poisson process}\index{Poisson process!homogenous}}
+\newcommand{\IPproc}{\emph{inhomogenous Poisson process}\index{Poisson process!inhomogenous}}
+\newcommand{\HRproc}{\emph{homogenous renewal process}\index{renewal process!homogenous}}
+\newcommand{\Cproc}{\emph{counting process}\index{counting process}}
+\newcommand{\Pproc}{\emph{point process}\index{point process}}
+\newcommand{\Pdist}{\emph{Poisson distribution}\index{Poisson distribution}}
+\newcommand{\IID}{\emph{independent and identically distributed}\index{independent and
+    identically distributed}}
+\newcommand{\iid}{\emph{iid}\index{independent and identically distributed}}
+\newcommand{\ML}{\emph{maximum likelihood}\index{maximum likelihood}}
+\newcommand{\MLE}{\emph{maximum likelihood estimate}\index{maximum likelihood estimate}}
+\newcommand{\LF}{\emph{likelihood function}\index{likelihood function}}
+\newcommand{\LLF}{\emph{log likelihood function}\index{log likelihood function}}
+\newcommand{\TQQplot}{\emph{theoretical quantile quantile plot}\index{isi}}
+\newcommand{\AIC}{\emph{Akaike's Information Criterion}\index{AIC}}
+\newcommand{\aic}{\emph{AIC}\index{AIC}}
+\newcommand{\ie}{\emph{i.e.}}
+\newcommand{\eg}{\emph{e.g.}}
+\newcommand{\PDF}{\emph{probability density function}\index{probability density function}}
+\newcommand{\pdf}{\emph{pdf}\index{probability density function}}
+\newcommand{\CDF}{\emph{cumulative distribution function}\index{cumulative distribution function}}
+\newcommand{\cdf}{\emph{cdf}\index{cumulative distribution function}}
+\newcommand{\SF}{\emph{survivor function}\index{survivor function}}
+\newcommand{\InFo}{\emph{intensity function}\index{intensity function}}
+\newcommand{\info}{\emph{IF}\index{intensity function}}
+\newcommand{\InPr}{\emph{intensity process}\index{intensity process}}
+\newcommand{\Histo}{\emph{history}\index{history}}
+\newcommand{\IIF}{\emph{integrated intensity function}\index{integrated intensity function}}
+\newcommand{\Smoothy}{\emph{smoothing spline}\index{smoothing spline}}
+\newcommand{\smp}{\emph{smoothing parameter}\index{smoothing parameter}}
+\newcommand{\TPS}{\emph{thin plate splines}\index{thin plate splines}}
+\newcommand{\CS}{\emph{cubic splines}\index{cubic splines}}
+\newcommand{\PACF}{\emph{partial autocorrelation function}\index{partial autocorrelation function}}
+
+% R related functions and index
+\newcommand{\R}{\textsf{R}\index{R}}
+\newcommand{\SpikeOMatic}{\textsf{SpikeOMatic}\index{R!SpikeOMatic}\index{SpikeOMatic}}
+\newcommand{\RHTML}{\textsf{R2HTML}\index{R!R2HTML}\index{R2HTML}}
+\newcommand{\mgcv}{\textsf{mgcv}\index{R!mgcv}\index{mgcv}}
+\newcommand{\sound}{\textsf{sound}\index{R!sound}\index{sound}}
+\newcommand{\library}{\textsf{library}\index{R!library}\index{library}}
+\newcommand{\search}{\textsf{search}\index{R!search}\index{search}}
+\newcommand{\plot}{\textsf{plot}\index{R!plot}\index{plot}}
+\newcommand{\contour}{\textsf{contour}\index{R!contour}\index{contour}}
+\newcommand{\image}{\textsf{image}\index{R!image}\index{image}}
+\newcommand{\persp}{\textsf{persp}\index{R!persp}\index{persp}}
+\newcommand{\apropos}{\textsf{apropos}\index{R!apropos}\index{apropos}}
+\newcommand{\data}{\textsf{data}\index{R!data}\index{data}}
+\newcommand{\scan}{\textsf{scan}\index{R!scan}\index{scan}}
+\newcommand{\readBin}{\textsf{readBin}\index{R!readBin}\index{readBin}}
+\newcommand{\readTable}{\textsf{read.table}\index{R!read.table}\index{read.table}}
+\newcommand{\args}{\textsf{args}\index{R!args}\index{args}}
+\newcommand{\paste}{\textsf{paste}\index{R!paste}\index{paste}}
+\newcommand{\installPackages}{\textsf{install.packages}\index{R!install.packages}\index{install.packages}}
+\newcommand{\Rlist}{\textsf{list}\index{R!list}\index{list}}
+\newcommand{\class}{\textsf{class}\index{R!class}\index{class}}
+\newcommand{\unclass}{\textsf{unclass}\index{R!unclass}\index{unclass}}
+\newcommand{\attribute}{\textsf{attribute}\index{R!attribute}\index{attribute}}
+\newcommand{\object}{\textsf{object}\index{R!object}\index{object}}
+\newcommand{\method}{\textsf{method}\index{R!method}\index{method}}
+\newcommand{\length}{\textsf{length}\index{R!length}\index{length}}
+\newcommand{\names}{\textsf{names}\index{R!names}\index{names}}
+\newcommand{\sapply}{\textsf{sapply}\index{R!sapply}\index{sapply}}
+\newcommand{\help}{\textsf{help}\index{R!help}\index{help}}
+\newcommand{\numeric}{\textsf{numeric}\index{R!numeric}\index{numeric}}
+\newcommand{\print}{\textsf{print}\index{R!print}\index{print}}
+\newcommand{\summary}{\textsf{summary}\index{R!summary}\index{summary}}
+\newcommand{\optim}{\textsf{optim}\index{R!optim}\index{optim}}
+\newcommand{\dlnorm}{\textsf{dlnorm}\index{R!dlnorm}\index{dlnorm}}
+\newcommand{\dgamma}{\textsf{dgamma}\index{R!dgamma}\index{dgamma}}
+\newcommand{\dweibull}{\textsf{dweibull}\index{R!dweibull}\index{dweibull}}
+\newcommand{\pinvgauss}{\textsf{pinvgauss}\index{R!pinvgauss}\index{pinvgauss}}
+\newcommand{\diff}{\textsf{diff}\index{R!diff}\index{diff}}
+\newcommand{\hist}{\textsf{hist}\index{R!hist}\index{hist}}
+\newcommand{\dataframe}{\textsf{data.frame}\index{R!data.frame}\index{data.frame}}
+\newcommand{\head}{\textsf{head}\index{R!head}\index{head}}
+\newcommand{\tail}{\textsf{tail}\index{R!tail}\index{tail}}
+\newcommand{\completeCases}{\textsf{complete.cases}\index{R!complete.cases}\index{complete.cases}}
+\newcommand{\acf}{\textsf{acf}\index{R!acf}\index{acf}}
+\newcommand{\ts}{\textsf{ts}\index{R!ts}\index{ts}}
+\newcommand{\filter}{\textsf{filter}\index{R!filter}\index{filter}}
+
+% STAR related functions and index
+\newcommand{\renewalTestPlot}{\textsf{renewalTestPlot}\index{STAR!renewalTestPlot}\index{renewalTestPlot}}
+\newcommand{\asSpikeTrain}{\textsf{as.spikeTrain}\index{STAR!as.spikeTrain}\index{as.spikeTrain}}
+\newcommand{\plotSpikeTrain}{\textsf{plot.spikeTrain}\index{STAR!plot.spikeTrain}\index{plot.spikeTrain}}
+\newcommand{\plotTransformedTrain}{\textsf{plot.transformedTrain}\index{STAR!plot.transformedTrain}\index{plot.transformedTrain}}
+\newcommand{\gammaMLE}{\textsf{gammaMLE}\index{STAR!gammaMLE}\index{gammaMLE}}
+\newcommand{\llogisMLE}{\textsf{llogisMLE}\index{STAR!llogisMLE}\index{llogisMLE}}
+\newcommand{\weibullMLE}{\textsf{weibullMLE}\index{STAR!weibullMLE}\index{weibullMLE}}
+\newcommand{\invgaussMLE}{\textsf{invgaussMLE}\index{STAR!invgaussMLE}\index{invgaussMLE}}
+\newcommand{\compModels}{\textsf{compModels}\index{STAR!compModels}\index{compModels}}
+\newcommand{\spikeTrain}{\textsf{spikeTrain}\index{STAR!spikeTrain}\index{spikeTrain}}
+\newcommand{\transformedTrain}{\textsf{transformedTrain}\index{STAR!transformedTrain}\index{transformedTrain}}
+\newcommand{\STAR}{\textsf{STAR}\index{STAR}}
+\newcommand{\dinvgauss}{\textsf{dinvgauss}\index{STAR!dinvgauss}\index{dinvgauss}}
+\newcommand{\dllogis}{\textsf{dllogis}\index{STAR!dllogis}\index{dllogis}}
+\newcommand{\drexp}{\textsf{drexp}\index{STAR!drexp}\index{drexp}}
+\newcommand{\isiHistFit}{\textsf{isiHistFit}\index{STAR!isiHistFit}\index{isiHistFit}}
+\newcommand{\diffSpikeTrain}{\textsf{diff.spikeTrain}\index{STAR!diff.spikeTrain}\index{diff.spikeTrain}}
+\newcommand{\gf}{\textsf{generic function}\index{STAR!generic function}\index{generic function}}
+\newcommand{\repeatedTrain}{\textsf{repeatedTrain}\index{STAR!repeatedTrain}\index{repeatedTrain}}
+\newcommand{\plotRepeatedTrain}{\textsf{plot.repeatedTrain}\index{STAR!plot.repeatedTrain}\index{plot.repeatedTrain}}
+\newcommand{\printRepeatedTrain}{\textsf{print.repeatedTrain}\index{STAR!print.repeatedTrain}\index{print.repeatedTrain}}
+\newcommand{\psthSTAR}{\textsf{psth}\index{STAR!psth}\index{peri stimulus time histogram}\index{psth}}
+\newcommand{\gsspsthSTAR}{\textsf{gsspsth0}\index{STAR!gsspsth0}\index{smooth peri stimulus time histogram}\index{gsspsth0}}
+\newcommand{\plotGsspsth}{\textsf{plot.gsspsth0}\index{STAR!plot.gsspsth0}\index{smooth
+    peri stimulus time histogram}\index{gsspsth0}}
+\newcommand{\summaryGsspsth}{\textsf{summary.gsspsth0}\index{STAR!summary.gsspsth0}\index{smooth
+    peri stimulus time histogram}\index{gsspsth0}}
+\newcommand{\gssObj}{\textsf{gssObj}\index{STAR!gssObj}\index{gssObj}}
+\newcommand{\reportHTML}{\textsf{reportHTML}\index{reportHTML}\index{STAR!reportHTML}}
+\newcommand{\reportHTMLspikeTrain}{\textsf{reportHTML.spikeTrain}\index{reportHTML.spikeTrain}\index{STAR!reportHTML.spikeTrain}}
+\newcommand{\reportHTMLrepeatedTrain}{\textsf{reportHTML.repeatedTrain}\index{reportHTML.repeatedTrain}\index{STAR!reportHTML.repeatedTrain}}
+\newcommand{\mkGLMdf}{\textsf{mkGLMdf}\index{STAR!mkGLMdf}\index{mkGLMdf}}
+\newcommand{\isiSTAR}{\textsf{isi}\index{STAR!isi}\index{isi}}
+\newcommand{\mkMtwoU}{\textsf{mkM2U}\index{STAR!mkM2U}\index{mkM2U}}
+\newcommand{\timeT}{\textsf{\%tt\%}\index{STAR!\%tt\%}\index{\%tt\%}}
+\newcommand{\predictLogProb}{\textsf{predictLogProb}\index{STAR!predictLogProb}\index{predictLogProb}}
+\newcommand{\quickPredict}{\textsf{quickPredict}\index{STAR!quickPredict}\index{quickPredict}}
+\newcommand{\qP}{\textsf{\%qp\%}\index{STAR!\%qp\%}\index{\%qp\%}}
+\newcommand{\changeScale}{\textsf{changeScale}\index{STAR!changeScale}\index{changeScale}}
+
+\newcommand{\gss}{\textsf{gss}\index{gss}}
+\newcommand{\gssanova}{\textsf{gssanova}\index{gss!gssanova}\index{gssanova}}
+
+\newcommand{\snow}{\textsf{snow}\index{snow}}
+\newcommand{\makeCluster}{\textsf{makeCluster}\index{snow!makeCluster}\index{makeCluster}}
+\newcommand{\clusterEvalQ}{\textsf{clusterEvalQ}\index{snow!clusterEvalQ}\index{clusterEvalQ}}
+\newcommand{\clusterApply}{\textsf{clusterApply}\index{snow!clusterApply}\index{clusterApply}}
+\newcommand{\stopCluster}{\textsf{stopCluster}\index{snow!stopCluster}\index{stopCluster}}
+
+\newcommand{\gamCheck}{\textsf{gam.check}\index{gam.check}\index{mgcv!gam.check}}
+
+
+\title{Intensity Estimation with STAR: short version}
+\author{
+  Christophe Pouzat \\
+  \\
+  MAP5, CNRS UMR 8145\\
+  UFR de math\'ematiques et informatique de l'universit\'e Paris-Descartes\\
+  45, rue des Saints-P\`eres\\
+  75006 Paris, France
+}
+
+
+\makeindex
+
+\begin{document}
+
+<<cacheSweave set up, echo=FALSE, results=hide, eval=FALSE>>=
+setCacheDir("IEwSTARshort_dataCachedD")
+@ 
+
+<<start up things, echo=FALSE, results=hide>>=
+options(width=80,SweaveSyntax="SweaveSyntaxNoweb")
+dir.create("report")
+dir.create("figs")
+set.seed(20061001)
+Sys.setlocale(category="LC_MESSAGES",locale="C")
+@ 
+
+\maketitle
+
+\tableofcontents
+
+\section{Introduction}
+\label{sec:introduction}
+
+What follows is a detailed description of how I presently estimate the
+\InFo~(\info)\footnote{``Our'' \InFo~is also often called the
+  \emph{conditional intensity function}\index{conditional intensity
+    function}, \eg, \citet{Brillinger_1988b,Ogata_1988} or the \emph{hazard
+    function}\index{hazard function}, \eg, \citet{Johnson_1996}. The
+  \InFo~should be called more properly the \InPr since it is in general a
+  function of random variables~\citet[p 51]{AndersenEtAl_1993}} of
+spike trains recorded in the \emph{spontaneous regime}~using
+\STAR{} functionalities. 
+
+This a ``short'' version of the vignette describing rather breifly the
+analysis of a single spike train. A longer,more comprehensive version
+can be found in the STAR web site\footnote{\url{http://sites.google.com/site/spiketrainanalysiswithr/}}.
+
+\subsection{Some jargon}
+\label{sec:some-jargon}
+
+Before entering into the details of the analysis some technical terms
+that are going to be used constantly in the sequel will be
+introduced. The notations follow mainly the ones of \citet[pp
+190--191]{Brillinger_1988b}.
+
+\begin{mydef}
+  For points $\{ t_j \}$ randomly scattered along a line, the
+  \Cproc~$N(t)$ gives the\marginpar{\Cproc~definition} 
+  number of points observed in the interval $(0,t]$:
+  \begin{equation}
+    \label{eq:1}
+    N(t) = \sharp \{ t_j \; \mathrm{with} \; 0 < t_j \leq t \}
+  \end{equation}
+  where $\sharp$ stands for the cardinality (number of elements) of
+    a set.
+\end{mydef}
+
+\citet{Brillinger_1988b} uses $\tau_j$ for our $t_j$.
+
+\begin{mydef}
+  The \Histo, $\mathcal{H}_t$, consists of the\marginpar{\Histo~definition}
+  variates determined up to and including time $t$ that are
+  necessary to describe the evolution of the \Cproc.
+\end{mydef}
+
+The \Histo~is often called the \emph{filtration}\index{filtration} in the
+\Cproc~literature. See \citet[p 93]{TouboulFaugeras_2007} for a
+rigorous definition of the concept, see also \citet[pp 49--51]{AndersenEtAl_1993}.
+
+\begin{mydef}
+  For the process $N$ and \Histo~$\mathcal{H}_t$, the \InFo~at time $t$ is defined
+  as\marginpar{\InFo~definition}:
+  \begin{equation}
+    \label{eq:2}
+    \lambda (t \mid \mathcal{H}_t) = \lim_{h \downarrow 0} \frac{\mathrm{Prob} \{
+        \mathrm{event} \; \in (t,t+h] \mid \mathcal{H}_t \}}{h}
+  \end{equation}
+\end{mydef}
+
+For small $h$ one has the interpretation:
+\begin{equation}
+  \label{eq:3}
+  \mathrm{Prob} \{ \mathrm{event} \; \in (t,t+h] \mid
+  \mathcal{H}_t \} \approx \lambda (t \mid \mathcal{H}_t) \, h
+\end{equation}
+
+Notice that we are using symbol $\lambda$ for the \InFo, following the
+now most usual convention~\citet[p 51]{AndersenEtAl_1993}, while
+\citet{Brillinger_1988b, Johnson_1996} use $\mu$.
+
+\subsection{Loading \STAR}
+\label{sec:loading-star}
+
+We will start with the analysis
+of the discharge of \texttt{neuron 1} in data set:
+\texttt{e060824spont}. I assume that you have installed the last
+version of \STAR{} from your favorite \textsf{CRAN} server. Then the
+first thing to do once \R~has been started is to load the package:\marginpar{\library}
+<<load STAR, results=hide>>=
+library(STAR)
+@ 
+Here some of the stuff printed upon loading the package has been removed.
+
+\section{Analysis of data from neuron 1 of e060824spont data set}
+\label{sec:e060824spont_1}
+
+\subsection{Loading data}
+\label{sec:loading-data}
+
+Fine, we now have to make the data set \texttt{e060824spont}~available
+from our work space, and this is done with function \data:\marginpar{\data}
+<<load e060824spont>>=
+data(e060824spont)
+@ 
+
+\subsection{Summarizing data}
+\label{sec:summarizing-data}
+
+We start by getting a quick summary of neuron 1 spike train by
+applying the \summary~method to the \spikeTrain~\object,
+\texttt{e060824spont[["neuron 1"]]}\footnote{As can be seen by looking
+at the documentation of the data set (\texttt{?e060824spont}),
+\texttt{e060824spont}~is a list of two \spikeTrain~objects.}:\marginpar{\summary}
+<<summary of neuron 1 from e060824spont>>=
+summary(e060824spont[["neuron 1"]])
+@ 
+
+\subsection{Automatic analysis}
+\label{sec:automatic-analysis}
+
+\subsubsection{reportHTML}
+\label{sec:reporthtml}
+
+We next carry out an ``automatic analysis'' using method \reportHTML:\marginpar{\reportHTML}
+<<automatic analysis of e060824spont_1, eval=TRUE>>=
+reportHTML(e060824spont[["neuron 1"]],filename="e060824spont_1",directory="report",otherST=e060824spont[c(2)],maxiter=100)
+@ 
+The result of this automatic analysis is a bunch of figures in
+\texttt{png} format and an \texttt{html} file named
+\texttt{e060824spont\_1.html} and located in subdirectory
+\texttt{report}. The best way to visualize the \texttt{html} file is
+clearly to use your favorite web browser.
+
+\subsubsection{Spike train plot}
+\label{sec:spike-train-plot}
+
+The first figure appearing on the web page (\texttt{e060824spont\_1.html}) is a \textsf{spike train
+  plot}\index{spike train plot}~\citep{PouzatChaffiol_2008} and is
+reproduced in Fig.~\ref{fig:e060824spont1st}. A striking
+staircase pattern can be seen on the realization of the
+\Cproc~defined by Eq.~\eqref{eq:1}. This
+pattern which translates into the non-uniform distribution of the ticks
+on the \RPlot~shown at the bottom of the graph rules out a model based
+on a \HPproc~for this spike train.
+\begin{figure}
+  \centering
+  \includegraphics[width=0.75\textwidth]{report/e060824spont_1_st}
+  \caption{The \textsf{spike train plot} of neuron 1 of data set \texttt{e060824spont}.}
+  \label{fig:e060824spont1st}
+\end{figure}
+
+\paragraph{\emph{Intensity function}~of an \HPproc}
+\label{sec:info-an-hpproc}
+The \info~of an \HPproc~is extremly simple. One has:
+\begin{equation}
+  \label{eq:4}
+  \lambda (t \mid \mathcal{H}_t) = \lambda_0
+\end{equation}
+That is, the \info~is a constant.
+
+\paragraph{Tip}
+\label{sec:tip-spike-train-plot}
+
+When dealing with spike train with a lot of events, say 1000 or more,
+the extra ``visibility'' provided by the \textsf{spike train
+  plot}\index{spike train plot}~compared to the classical \RPlot, can
+be defficient in the sense that important details of the discharge can
+end up being not discernible. It is then easy to use the subsetting
+method for \spikeTrain~objects which would give in the present
+case:\marginpar{Subsetting \spikeTrain~objects}
+<<sub set spikeTrain, eval=FALSE>>=
+e060824spont[[1]][10 <= e060824spont[[1]] & e060824spont[[1]] < 40]
+@ 
+The resulting \textsf{spike train plot}\index{spike train plot}~is not
+shown in this document, but a ``zoom'' of
+Fig.~\ref{fig:e060824spont1st} between seconds 10 and 40 would pop-up.
+
+\subsubsection{renewalTestPlot}
+\label{sec:renewaltestplot}
+
+As explained in \citet[Sec. 2.4.3]{PouzatChaffiol_2008}, the model
+``following'' the \HPproc~is the \HRproc. A graphical plot of the
+suitability of such a model for empirical data is the second graph
+appearing on the web page,
+\texttt{e060824spont\_1.html}, and is generated by function
+\renewalTestPlot. We show it here on Fig.~\ref{fig:e060824spont1rt}
+from which it is clear that a \HRproc~model does not apply.
+\begin{figure}
+  \centering
+  \includegraphics[width=0.75\textwidth]{report/e060824spont_1_rt}
+  \caption{Renewal test plot of neuron 1 of data set \texttt{e060824spont}.}
+  \label{fig:e060824spont1rt}
+\end{figure}
+
+\paragraph{\emph{Intensity function}~of a \HRproc}
+\label{sec:info-hrproc}
+
+The \info~of a \HRproc~is still reasonably simple. One has:
+\begin{equation}
+  \label{eq:5}
+  \lambda (t \mid \mathcal{H}_t) = r(t-t_l)
+\end{equation}
+where $t_l$ is the occurence time of the last spike before $t$, formally, $t_l =
+\max \{t_j : t_j < t\}$. In other words,
+$t-t_l$ is the elapsed time since the last spike. It is as if the
+clock was reset at 0 everytime an event occurs. For a \HRproc~the
+\Histo~is simply made of all the spikes observed up to, but not
+including, $t$: $\{t_j : t_j < t \}$.
+
+\subsubsection{Cross correlation histograms and Cross-intensity plots}
+\label{sec:cross-intensity-plots}
+
+The web page shows next two plots which are relevant only when the
+\HRproc~applies. They are not reproduced here since a more
+sophisticated model is required as shown by
+Fig.~\ref{fig:e060824spont1rt}. The last plots showing the
+\CCH~\citep[Eq. (13), p 218]{BrillingerEtAl_1976} and its smooth
+version, the \CIP, is reproduced here on
+Fig.~\ref{fig:e060824spont1cc}. Since this data sets contains only two
+neurons, only one such plot appears on the web page. With more neurons
+in the data set, more plots can be generated by setting properly
+argument \texttt{otherST} of method \reportHTML. 
+\begin{figure}
+  \centering
+  \includegraphics[width=0.75\textwidth]{report/e060824spont_1_neuron_2_ci}
+  \caption{Cross-intensity plot and Cross correlation histogram between neuron 1 and 2 of data set \texttt{e060824spont}.}
+  \label{fig:e060824spont1cc}
+\end{figure}
+Since the black horizontal lines on Fig.~\ref{fig:e060824spont1cc} is
+entirely contained in the ``confidence region'', there is no ground to
+include an interaction term between the two recording neurons in our
+discharge model for neuron 1.
+
+\subsubsection{Conclusions of the automatic analysis}
+\label{sec:concl-autom-analys}
+
+This automatic analysis leads us to conclude that our model needs to be
+more complex than a \HRproc~model
+(Fig.~\ref{fig:e060824spont1rt}). The absence of significant
+cross-correlation (Fig.~\ref{fig:e060824spont1cc}) suggests that an
+interaction term between neurons 1 and 2 of the data set is not
+required. Moreover neither the \textsf{spike train plot}\index{spike
+  train plot} (Fig.~\ref{fig:e060824spont1st}) nor the
+auto-correlation function plot (bottom left of
+Fig.~\ref{fig:e060824spont1rt}) show clear signs of non stationnarity
+of the train. \emph{At the present stage we do not have any method
+  leading to unambiguously interpretable models with non stationnary
+  data in the spontaneous regime}. 
+
+A model more complex than a \HRproc~model will necessarily lead us to
+a multivariate \info. Biophysics teaches us that every neuron exhibits
+a refractory period following a spike (ruling out the \HPproc~as a
+``true'' model) and that will lead us to always include the elapsed
+time since the last spike in our models; just as we did for the
+\HRproc~model of Eq.~\eqref{eq:5}. Of course the bothering question at
+this stage is: What the extra variables in our \info~model should be? A
+``natural'' way to include interactions between neurons would be to
+add the elapsed time since the last spike of a ``functionally''
+coupled neuron in our variables list. But as we just saw for the
+present data set such an additional variable does not seem
+necessary. We are therefore left with the occurrence times of the
+other previous spikes, or equivalently, with the duration of the
+previous \ISI s (\isi s). The question becomes then: how many previous
+\isi s should we include in our variables list? The next section
+presents a tool providing us with a first guess.
+
+\subsection{Partial autocorrelation function}
+\label{sec:pacf}
+
+A practical guidance on how many past \isi s
+should be included is provided by the
+\href{http://en.wikipedia.org/wiki/Partial\_autocorrelation\_function}{\PACF}~of
+the \isi s~\citep[pp
+77--79]{KuhnertVenables_2005}. A graph of this function for the present
+data set  is shown on Fig.~\ref{fig:e060824spont1pacf}. It is obtained
+with command:\marginpar{\acf}
+<<prepare pacf of neuron 1 data set e060824, results=hide, echo=FALSE>>=
+pdf(file="figs/e060824spont_1_pacf.pdf",width=10,height=10)
+par(cex=1.5)
+@ 
+<<pacf of neuron 1 data set e060824>>=
+acf(diff(e060824spont[["neuron 1"]]),type="partial")
+@ 
+<<finish pacf of neuron 1 data set e060824, results=hide, echo=FALSE>>=
+dev.off()
+@ 
+\begin{figure}
+  \centering
+  \includegraphics[width=0.65\textwidth]{figs/e060824spont_1_pacf}
+  \caption{The \PACF~of neuron 1 of data set \texttt{e060824spont}.}
+  \label{fig:e060824spont1pacf}
+\end{figure}
+What we should look at
+here are the lags at which the function is out of 95\% ``confidence
+intervals'', like lag 1 for this data set.
+
+This initial analysis would lead us to a model like:
+\begin{equation}
+  \label{eq:6}
+  \lambda (t \mid \mathcal{H}_t) = f(t-t_l,i_1)
+\end{equation}
+where $i_1$ is the duration of the last \isi.
+
+\paragraph{Tip}
+\label{sec:tip}
+
+In practice when the \HRproc~model does not apply, I always include
+the last \isi~in the model variables list even if \PACF~is not out of
+the confidence intervals at lag 1. I include in addition all the other
+\isi s for which it is out.
+
+\subsection{Data frame for gss}
+\label{sec:data-frame-gss}
+
+We will follow the approach of~\citet[p 191]{Brillinger_1988b}, where
+for computational convenience, a discretization of the spike train is
+performed. That is, we go from the ``actual train'',
+$\{t_1,\ldots,t_n\}$ where $0 < t_1,\ldots,t_n \leq T$, to a binary
+vector, $event$\marginpar{time discretization and vector $event$},
+whose $j$th  element is the value of the  sum over
+$\{t_1,\ldots,t_n\}$ of the indicator
+function $I_j$ defined by:
+\begin{equation}
+  \label{eq:7}
+  I_j(t) = \left\{
+    \begin{array}{ll}
+      1 & \textrm{if $(j-1) \delta < t \leq j \delta$} \\
+      0 & \textrm{otherwise}
+    \end{array}
+    \right.
+\end{equation}
+Where the ``bin width'', $\delta$, is chosen small enough to have at
+most one spike per bin\footnote{This type of discretization is
+  referred to by~\citet[pp 33--34]{BermanTurner_1992} as a
+  \emph{probabilistic approximation}\index{probabilistic
+    approximation}, they propose an alternative \emph{numerical
+    approximation} where the bin width, $\delta$, is allowed to change
+along the time axis. The quantity being approximated is the likelihood
+of
+intensity~\citep[Sec. 2]{PouzatChaffiol_2008b}. \citet{ChornoboyEtAl_1988}
+present an approach similar to the one of \citet{Brillinger_1988b}
+albeit with a different motivation. Brillinger did moreover use this
+probabilistic approximation from the early eighties on as witnessed
+by his 1983 ``Wald Memorial Lecture''~\citep[p
+34]{Brillinger_1988}.}. More explicitly we have:
+\begin{equation}
+  \label{eq:8}
+  event_j = \sum_{k=1}^n I_j(t_k)
+\end{equation}
+When we work with this binary vector $event$ we do not estimate
+$f(t-t_l,i_1)$ directly anymore but:
+\begin{equation}
+  \label{eq:9}
+  f_{\delta}(t-t_l,i_1) \equiv f\left( (j-j_l)
+  \delta,(j_l-j_{l-1}) \delta \right) \delta
+\end{equation}
+where $j$ is be index of the bin containing time $t$, $j_l$ is the
+index of the bin of the previous spike and $j_{l-1}$ is the index of
+the second previous spike. $f_{\delta}$
+should be a probability (if $\delta$ has indeed been set small
+enough), that is a number between 0 and 1. This is
+what~\citet[Eq. (2.5), p 191]{Brillinger_1988b} writes $p_t$ (his $t$
+being our $j$). 
+
+Since Biophysics doesn't help us much beyond the presence of a
+refractory period, it is hard to guess what $f(t-t_l,i_1)$ of
+Eq.~\eqref{eq:6} or $f_{\delta}(t-t_l,i_1)$ of Eq.~\eqref{eq:9} should
+look like. We will therefore use a 
+nonparametric approach where $f_{\delta}(t-t_l,i_1)$ will be estimated with a
+\emph{penalized likelihood}\index{penalized likelihood} method. The
+general features of this approach are describe briefly
+in~\citet[Sec. 2.5.2]{PouzatChaffiol_2008} and in depth in~\citet{Gu_2002}.
+
+The model estimation will moreover be performed by function
+\gssanova~of Chong Gu's package \gss. The data ``fed'' to this
+function have to be in a \textsf{data frame}\index{data frame}
+format. Function \mkGLMdf~of \STAR{} will allow us to build a
+\textsf{data frame} from a \spikeTrain~\object. Since our preliminary
+analysis lead us to rule out an interaction between the two neurons of
+our data set, we do not need to include a variable containing the
+ellapsed time since the last spike of neuron 2 in our data frame. Our
+initial \summary~taught us that the shortest \isi~was 8 ms long and
+that events were obeserved between 0 and 59 s. We will therefore use a
+bin width of 4 ms and create our data frame with\marginpar{\mkGLMdf}:
+<<create DFA, cache=true>>=
+DFA <- mkGLMdf(e060824spont[["neuron 1"]],0.004,0,59)
+@ 
+We can get a quick view of the first elements of our data frame
+\texttt{DFA} with:\marginpar{\head}
+<<head of DFA>>=
+head(DFA)
+@ 
+Here the variables are:
+\begin{itemize}
+\item \texttt{event} corresponds to our previous $event$
+  vector, it contains the binary version of the spike train.
+\item \texttt{time} contains the time at the bin center (in s).
+\item \texttt{neuron} contains the number of the considered neuron in
+  the data set (the one to which the spikes in the \texttt{event}
+  variable belong). It wont be used here but it becomes useful when
+  several neurons are present and when interactions between them have
+  to be considered as we will later see.
+\item \texttt{lN.1} contains the elapsed time since the last spike of
+  neuron 1, that is, $j-j_l$ in Eq.~\eqref{eq:9}.
+\end{itemize}
+We can also get a quick view at the end of \texttt{DFA} with:\marginpar{\tail}
+<<tail of DFA>>=
+tail(DFA)
+@ 
+
+There is still one variable missing in our data frame in order to work
+with our candidate model: the last \isi~which can be obtained with
+function \isiSTAR~of \STAR:\marginpar{\isiSTAR}
+<<add i1 to DFA, cache=true>>=
+DFA <- within(DFA,i1 <- isi(DFA,lag=1))
+@ 
+Here we have just added variable \texttt{i1} to our data frame. As we
+can see by calling \head~on our modified \texttt{DFA}:
+<<head of modified DFA>>=
+head(DFA)
+@ 
+values of \texttt{i1} are not available for the first elements of the
+data frame. It makes sense since we do not know when was the last
+spike before the beginning of the acquisition. We are therefore going
+to remove the elements of \texttt{DFA} for which one of the
+variables is not available. We can do that efficiently with function
+\completeCases~of \R:\marginpar{\completeCases}
+<<get ride of NA in DFA, cache=true>>=
+DFA <- DFA[complete.cases(DFA),]
+@ 
+Calling \head~again, we can see that \completeCases~did its job right:
+<<head of modified DFA again>>=
+head(DFA)
+@ 
+<<start of burst, echo=FALSE, results=hide>>=
+burstIdx <- with(DFA,which(time == with(DFA,time[event==1])[which.min(diff(with(DFA,time[event==1])))])) 
+@ 
+We can moreover check that \isiSTAR~did its job correctly by looking at a well
+chosen part of \texttt{DFA}, like the one starting at index \Sexpr{burstIdx-1}:
+<<check isi job, echo=FALSE>>=
+DFA[burstIdx+(-1:6),]
+@ 
+
+\subsection{Variables transformation}
+\label{sec:var-trans}
+
+A crucial ingredient for efficient smoothing spline estimation is an
+a ``reasonably'' uniform distribution of the independent variables (or
+predictors). But as Fig.~\ref{fig:ecdfIvar} shows our independent variables,
+\texttt{lN.1} and \texttt{i1} are not uniformly distributed.
+<<prepare ecdf of lN.1 and i1 fig, echo=FALSE, results=hide>>=
+pdf(file="figs/ecdfIvar.pdf",width=12,height=8)
+layout(matrix(1:2,nc=2))
+par(cex=1.5)
+@ 
+<<ecdf of lN.1 and i1 fig>>=
+with(DFA,plot(ecdf(lN.1),pch="."))
+with(DFA,lines(range(lN.1),c(0,1),col=2,lty=2))
+with(DFA,plot(ecdf(i1),pch="."))
+with(DFA,lines(range(i1),c(0,1),col=2,lty=2))
+@ 
+<<finish ecdf of lN.1 and i1 fig, echo=FALSE, results=hide>>=
+dev.off()
+@ 
+\begin{figure}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figs/ecdfIvar}
+  \caption{Empirical cumulative distribution function of \texttt{lN.1} and \texttt{i1}.}
+  \label{fig:ecdfIvar}
+\end{figure}
+In the sequel we will adopt the slightly extrem ``mapping to uniform''
+approach, that is, we are going to estimate a smooth version of the
+\CDF~(\cdf) and use it to transform our independent variables. The
+\STAR{} function doing this job is \mkMtwoU. It can be called on part of
+the data set in order to perform a mapping of the other part
+independent of the (mapped) data. For our two variables \texttt{lN.1}
+and \texttt{i1} we call:\marginpar{\mkMtwoU}
+<<map lN.1 and i1 two uniform, cache=true>>=
+m2u1 <- mkM2U(DFA,"lN.1",0,28.5)
+m2ui <- mkM2U(DFA,"i1",0,28.5,maxiter=200)
+@ 
+The results of these two commands are two mapping functions that we
+can now use to generate the ``mapped to uniform'' variables,
+\texttt{e1t} and \texttt{i1t}:
+<<add e1t and i1t to DFA, cache=true>>=
+DFA <- within(DFA,e1t <- m2u1(lN.1))
+DFA <- within(DFA,i1t <- m2ui(i1))
+@ 
+Fig.~\ref{fig:ecdfIvarT} shows us that our mapping worked properly.
+<<prepare ecdf of lN.1 and i1 fig, echo=FALSE, results=hide>>=
+pdf(file="figs/ecdfIvarT.pdf",width=12,height=8)
+layout(matrix(1:2,nc=2))
+par(cex=1.5)
+@ 
+<<ecdf of e1t and i1t, echo=FALSE, results=hide>>=
+with(DFA,plot(ecdf(e1t),pch="."))
+with(DFA,lines(range(e1t),c(0,1),col=2,lty=2))
+with(DFA,plot(ecdf(i1t),pch="."))
+with(DFA,lines(range(i1t),c(0,1),col=2,lty=2))
+@ 
+<<finish ecdf of e1t and i1t fig, echo=FALSE, results=hide>>=
+dev.off()
+@ 
+\begin{figure}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figs/ecdfIvarT}
+  \caption{Empirical cumulative distribution function of \texttt{e1t} and \texttt{i1t}.}
+  \label{fig:ecdfIvarT}
+\end{figure}
+
+\subsection{Variables evolution}
+\label{sec:variables-evolution}
+
+Before going further it can be a good idea to look at the (time)
+evolution of the variables. In order to do that quickly we are going to
+use the default \emph{time series objects}~provided by \R~and created
+with function \ts. Looking at \texttt{e1t} should not be too
+interesting since this variable is starting at zero following an event
+and increases linearly thereafter. We will therefore look at our
+\texttt{event} and \texttt{i1t} variables. In order to have a clearer
+picture we are going to box-filter the variables using function \filter~with a widow length
+of 0.5 s (that is, 125 indexes, since we used a bin width of 4 ms). We
+will also map \texttt{i1t} onto a normal random variable and we get
+Fig.~\ref{fig:e060824IvarEvol} :\marginpar{\ts~\filter}
+<<prepare e060824IvarEvol fig, echo=FALSE, results=hide>>=
+pdf(file="figs/e060824IvarEvol.pdf",width=12,height=8)
+par(cex=2)
+@ 
+<<make time series object, cache=true>>=
+DFAts <- ts(with(DFA,cbind(event,qnorm(i1t))),
+            start=DFA$time[1],
+            delta=diff(DFA$time[1:2]))
+@ 
+<<plot DFAts after box-filtering it>>=
+plot(filter(DFAts,rep(1/125,125)))
+@ 
+<<finish e060824IvarEvol fig, echo=FALSE, results=hide>>=
+dev.off()
+@ 
+\begin{figure}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figs/e060824IvarEvol}
+  \caption{Time evolution of \texttt{event} and \texttt{i1t}. A box filter of 0.5 s has been applied}
+  \label{fig:e060824IvarEvol}
+\end{figure}
+Fig.~\ref{fig:e060824IvarEvol} does not exhibit any clear trend in the
+graphed variables, confirming thereby our former stationary discharge
+conclusion. Depending on the data at hand it can clearly be a good
+idea to try out several filter window lengths.
+
+\subsection{Fitting and testing models}
+\label{sec:fit-test-models}
+
+Since we are going to use nonparametric model estimation procedures and
+since we want to have meaningful goodness of fit tests we will
+systematically fit a given model to one half of the data and test it
+on the other half before switching the fit and test data parts and
+repeating the procedure.
+
+\subsubsection{Model fit: the straightforward approach}
+\label{sec:model-fit:-stra}
+
+We are going to fit our models using function \gssanova~of package
+\gss. The most straightforward way to fit the model of
+Eq.~\eqref{eq:6} to the first half of our data set is:\marginpar{\gssanova} 
+<<GF1e e060824spont_1 display, eval=FALSE>>=
+GF1e <- gssanova(event ~ e1t*i1t, data=subset(DFA,time<=29.5),
+                 family="binomial",seed=20061001)
+@ 
+<<GF1e e060824spont_1 do it, echo=FALSE, results=hide, cache=true>>=
+GF1e.time <- system.time(GF1e <- gssanova(event ~ e1t*i1t, data=subset(DFA,time<=29.5),family="binomial",seed=20061001))
+@ 
+The time needed to carry out this fit on the present machine is,
+\Sexpr{round(GF1e.time[3],digits=2)} s\footnote{The ``present machine'' is an ASUS netbook F301A with an Intel B970 CPU at 2.3 GHz with 4 GB of RAM, running ARCH Linux. For reference, it takes
+88.23 s on an Intel Core2 Duo P9500 at 2.53 GHz with 4 GB of RAM,
+running Ubuntu 9.04, R-2.9.1 link to the ATLAS version of BLAS
+(version 3.8.3) everything being compiled with gcc 4.3.3.}
+
+\subsubsection{Time transformation and goodness of fit}
+\label{sec:time-transformation}
+
+We will asses the quality of our model by evaluating the \InPr~of the
+part of the data taht we did not use fro model estiamtion. This
+\InPr~will then be used to performed a \emph{time
+  transformation}\index{time transformation} as proposed
+by~\citet{Ogata_1988} after which a new \Cproc~will be obtained. If
+our model is good this process should be the realization of a
+\HPproc~with rate 1. The latter process is then the null hypothesis
+against which we are going to test~\citet{PouzatChaffiol_2008b}. The
+time transformation is simply performed with function \timeT~of
+\STAR. It is called as follows:\marginpar{\timeT}
+<<time transform GF1e, cache=true>>=
+tt.GF1e <- GF1e %tt% subset(DFA,time>29.5)
+@ 
+Object \texttt{tt.GF1e} is an \object~of class \Sexpr{class(tt.GF1e)} for
+which a \summary~\method~exists providing a quick numeric summary of
+how appropriate the model is:
+<<summary tt.GF1e, cache=true>>=
+tt.GF1e.summary <- summary(tt.GF1e)
+@ 
+<<print tt.GF1e.summary>>=
+tt.GF1e.summary
+@ 
+Notice that the last two commands could be combined in a single one by typing:
+<<last two in one, eval=FALSE>>=
+(tt.GF1e.summary <- summary(tt.GF1e))
+@ 
+The quality of the model can also be assest by calling the
+\plot~\method~for \Sexpr{class(tt.GF1e)} objects as shown on Fig.~\ref{fig:e060824spont_1_GF1e_ogata}:
+<<prepare fig e060824spont_1_GF1e_ogata, echo=FALSE, results=hide>>=
+pdf(file="figs/e060824spont_1_GF1e_ogata.pdf",width=10,height=10)
+par(cex=2)
+@ 
+<<do fig e060824spont_1_GF1e_ogata>>=
+plot(tt.GF1e.summary,which=c(1,2,4,6))
+@ 
+<<prepare fig e060824spont_1_GF1e_ogata, echo=FALSE, results=hide>>=
+dev.off()
+@ 
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{figs/e060824spont_1_GF1e_ogata}
+  \caption{Ogata's tests battery applied to the time transformed
+    second half of neuron 1 spike train (from data set:
+    \texttt{e060824spont}) using model \texttt{GF1e} fitted on the
+    first half. See~\citet{PouzatChaffiol_2008b} for a description of
+    the plots.}
+  \label{fig:e060824spont_1_GF1e_ogata}
+\end{figure}
+Looking at Fig.~\ref{fig:e060824spont_1_GF1e_ogata} we would conclude
+that the model is satisfying.
+
+\subsubsection{Exchanging fitting and testing part}
+\label{sec:exch-fit-and-test}
+
+In order to fully validate our model we are going to exchange the
+fitting and testing part, that is, fit the same model as before to the
+last half of the data set before testing it on the first half:
+<<GF1l e060824spont_1 do it, echo=FALSE, results=hide, cache=true>>=
+GF1l.time <- system.time(GF1l <- gssanova(event ~ e1t*i1t, data=subset(DFA,time>29.5),
+                                          family="binomial",seed=20061001))
+@ 
+<<GF1l e060824spont_1 display, eval=FALSE>>=
+GF1l <- gssanova(event ~ e1t*i1t, data=subset(DFA,time>29.5),family="binomial",seed=20061001)
+@ 
+The total time taken by our two fits is:
+\Sexpr{round(GF1e.time[3]+GF1l.time[3],digits=2)} s. We now perform
+the same series of tests than before but this time on the early part of the data set:
+<<time transform GF1l, cache=true>>=
+tt.GF1l <- GF1l %tt% subset(DFA,time<=29.5)
+@ 
+<<summary tt.GF1e short, eval=FALSE>>=
+(tt.GF1l.summary <- summary(tt.GF1l))
+@ 
+<<summary tt.GF1e, echo=FALSE, results=hide, cache=true>>=
+tt.GF1l.summary <- summary(tt.GF1l)
+@ 
+<<print tt.GF1l.summary, echo=FALSE>>=
+tt.GF1l.summary
+@ 
+<<prepare fig e060824spont_1_GF1l_ogata, echo=FALSE, results=hide>>=
+pdf(file="figs/e060824spont_1_GF1l_ogata.pdf",width=10,height=10)
+par(cex=2)
+@ 
+<<do fig e060824spont_1_GF1l_ogata>>=
+plot(tt.GF1l.summary,which=c(1,2,4,6))
+@ 
+<<finish fig e060824spont_1_GF1l_ogata, echo=FALSE, results=hide>>=
+dev.off()
+@ 
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{figs/e060824spont_1_GF1l_ogata}
+  \caption{Ogata's tests battery applied to the time transformed
+    first half of neuron 1 spike train (from data set:
+    \texttt{e060824spont}) using model \texttt{GF1l} fitted on the
+    second half.}
+  \label{fig:e060824spont_1_GF1l_ogata}
+\end{figure}
+Looking at Fig.~\ref{fig:e060824spont_1_GF1l_ogata} we would conclude
+again that the model is satisfying.
+
+\subsubsection{Doing two fits at once with a multi-core CPU}
+\label{sec:doing-two-fits-at-once}
+
+See the long version of the vignette on the STAR web
+site\footnote{\url{http://sites.google.com/site/spiketrainanalysiswithr/}}. 
+
+\subsubsection{Trying a simpler model}
+\label{sec:trying-simpler-model}
+
+We have just explored a model containing an ``interaction'' term
+between variable \texttt{e1t} and variable \texttt{i1t}. Since the
+latter gives good fits it is interesting to try simplifying it to see
+if a model without interaction would not give as good results we proceed as follows:
+<<GF2 sequential, eval=TRUE, cache=true>>=
+GF2e <- gssanova(event ~ e1t+i1t, data=subset(DFA,time<=29.5),
+                 family="binomial",seed=19731004)
+tt.GF2e <- GF2e %tt% subset(DFA,time>29.5)
+(tt.GF2e.summary <- summary(tt.GF2e))
+GF2l <- gssanova(event ~ e1t+i1t, data=subset(DFA,time>29.5),
+                 family="binomial",seed=19731004)
+tt.GF2l <- GF2l %tt% subset(DFA,time<=29.5)
+(tt.GF2l.summary <- summary(tt.GF2l))
+@ 
+ 
+The
+fit diagnostic plots are shown on Fig.~\ref{fig:e060824spont_1_GF2_ogata}.
+<<GF2 fit plot, echo=FALSE, results=hide>>=
+pdf(file="figs/e060824spont_1_GF2_ogata.pdf",width=10,height=15)
+layout(matrix(1:6,nr=3))
+par(cex=1.5,mar=c(4,3,3,2))
+plot(tt.GF2e.summary,which=2)
+plot(tt.GF2e.summary,which=4)
+plot(tt.GF2e.summary,which=6)
+plot(tt.GF2l.summary,which=2)
+plot(tt.GF2l.summary,which=4)
+plot(tt.GF2l.summary,which=6)
+dev.off()
+@ 
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{figs/e060824spont_1_GF2_ogata}
+  \caption{Ogata's tests battery applied to the time transformed
+    neuron 1 spike train (from data set:
+    \texttt{e060824spont}) using model \texttt{GF2}. Left column, fit
+    first half, test second half (compare with
+    Fig.~\ref{fig:e060824spont_1_GF1e_ogata}). Right column, fit second half, test
+    first (compare with Fig.~\ref{fig:e060824spont_1_GF1l_ogata}). The
+    first tests (upper right) of 
+    Fig.~\ref{fig:e060824spont_1_GF1e_ogata} and
+    ~\ref{fig:e060824spont_1_GF1l_ogata} are not shown here but are
+    ``passed'' (\ie, within the confidence bands).}
+  \label{fig:e060824spont_1_GF2_ogata}
+\end{figure}
+Since the simpler model also looks good, the question becomes: Which
+one should we choose?
+
+\subsection{Model selection}
+\label{sec:model-selection}
+
+One way to compare two alternative models is to look at the
+probability they give to data \emph{which were not the data used to
+  fit them}. This can be done with function \predictLogProb~of
+\STAR{} which returns the log probability of some data (passed as the
+second argument to the function) under some model (passed as the first
+argument). Here the log probability of our data using the simpler
+model is:\marginpar{\predictLogProb}
+<<log prob of simpe model, cache=true>>=
+(GF2.logProb <- predictLogProb(GF2e,subset(DFA,time>29.5))+
+ predictLogProb(GF2l,subset(DFA,time<=29.5)))
+@
+<<log prob of simpe model print, echo=FALSE>>=
+GF2.logProb
+@ 
+<<log prob of complex model, cache=true>>=
+(GF1.logProb <- predictLogProb(GF1e,subset(DFA,time>29.5))+predictLogProb(GF1l,subset(DFA,time<=29.5)))
+@ 
+<<log prob of complex model print, echo=FALSE>>=
+GF1.logProb
+@ 
+Since the most complex model (with interaction) gives a higher
+probability than the less complex one (without interaction) I would go
+ahead and keep the former.
+
+\subsection{Plotting results}
+\label{sec:plotting-results}
+
+\subsubsection{Quick visualization of the model terms}
+\label{sec:quick-vis-terms}
+
+Before looking at the model terms effect we would normaly refit our selected
+model to the full data set in orer to have better estimates
+with\footnote{We do not do it in this short version but the results
+  are presented in the ``long'' version of the STAR web site.}:
+<<fit selected model to whole set, echo=FALSE, results=hide, eval=FALSE>>=
+GF1f.time <- system.time(GF1f <- gssanova(event~e1t*i1t, data=DFA, family="binomial", seed=20061001))
+@ 
+<<fit selected model to whole set show, eval=FALSE>>=
+GF1f <- gssanova(event~e1t*i1t, data=DFA, family="binomial", seed=20061001)
+@ 
+We use here the fit obtained from the first half of the data set (\texttt{GF1e}).
+A plot of the terms is then quickly generated with the
+\plot~\method~for \gssanova~\object s:
+<<prepare e060824spont_1_GF1_terms, echo=FALSE, results=hide>>=
+pdf(file="figs/e060824spont_1_GF1_terms.pdf",width=10,height=15)
+@ 
+<<plot GF1e>>=
+plot(GF1e, nr=3, nc=1)
+@ 
+<<finish e060824spont_1_GF1_terms, echo=FALSE, results=hide>>=
+dev.off()
+@ 
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{figs/e060824spont_1_GF1_terms}
+  \caption{Effects of the 3 terms of the selected model for neuron 1
+    of data set \texttt{e060824spont}. The abscissa scale corresponds
+    to the percentiles of the variables. The ordinate logit scales are
+    directly comparable. On the third plot the estimated interaction
+    term is displayed as red contours while the estimated standard
+    error is displayed as dotted black contours.}
+  \label{fig:e060824spont_1_GF1_terms}
+\end{figure}
+
+\subsubsection{Use of \quickPredict~and its associated methods}
+\label{sec:use-quickpredict}
+
+A finner control of the plots can be obtained with the
+\quickPredict~function of \STAR{} and of its associated \plot, \contour,
+\image~and \persp~\method s. The easiest way to fine tune a term
+effect plot with \STAR{} is to generate a
+\quickPredict~\object~containing the term effect first. For the first
+two terms, \texttt{e1t} and \texttt{i1t} of our model this is done
+simply with:\marginpar{\quickPredict}
+<<quickPredict on e1t, cache=true>>=
+term.e1t <- quickPredict(GF1e,"e1t")
+@ 
+or, using the binary operator version, \qP:\marginpar{\qP}
+<<quickPredict on i1t, cache=true>>=
+term.i1t <- GF1e %qp% "i1t"
+@ 
+We can then call the \plot~\method~for \quickPredict~\object s and get
+basic plots. We can also pass additional arguments to these methods in
+order to fine tune the output. Another thing we can do is get a plot
+of the term effects on the ``native'' scale instead of the
+``probability'' scale. To do that we can use the
+\textsf{qFct}~attribute of our ``mapping to uniform'' functions
+(Sec.~\ref{sec:var-trans}). What we have to transform is the
+\textsf{xx} element of our two \quickPredict~\object s,
+\texttt{term.e1t} and \texttt{term.i1t}:
+<<get native scale for term.e1t and term.i1t, cache=true>>=
+term.e1 <- term.e1t
+term.e1$xx <- attr(m2u1,"qFct")(term.e1$xx)
+term.i1 <- term.i1t
+term.i1$xx <- attr(m2ui,"qFct")(term.i1$xx)
+@ 
+We can then use the \plot~\method~to get Fig.~\ref{fig:e060824spont_1_GF1_terms2}:
+<<prepare Fig e060824spont_1_GF1_terms2, echo=FALSE, results=hide>>=
+pdf(file="figs/e060824spont_1_GF1_terms2.pdf",width=10,height=10)
+layout(matrix(1:4,nr=2,byrow=TRUE))
+par(cex=1.5,mar=c(4,3,3,1))
+@ 
+<<do Fig e060824spont_1_GF1_terms2>>=
+plot(term.e1t,
+     xlab="Probability scale",
+     ylab=expression(eta[1]),
+     main="Elapsed time since last spike")
+plot(term.e1,
+     xlab="Time (s)",
+     ylab=expression(eta[1]),
+     panel.first=grid(col=1),
+     main="Elapsed time since last spike")
+plot(term.i1t,
+     xlab="Probability scale",
+     ylab=expression(eta[i1]),
+     main="Last ISI")
+plot(term.i1,
+     xlab="Time (s)",
+     ylab=expression(eta[i1]),
+     main="Last ISI",
+     panel.first=grid(col=1))
+@ 
+<<finish Fig e060824spont_1_GF1_terms2, echo=FALSE, results=hide>>=
+dev.off()
+@ 
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{figs/e060824spont_1_GF1_terms2}
+  \caption{Terms \texttt{e1t} (upper row) and \texttt{i1t} (lower row)
+  with a probability scale (left column) and with a native scale
+  (right column).}
+  \label{fig:e060824spont_1_GF1_terms2}
+\end{figure}
+
+The \quickPredict~\object~corresponding to the interaction term of the
+model, \texttt{e1t:i1t}, is also easily obtained:
+<<quickPredict on e1t:i1t, cache=true>>=
+term.e1ti1t <- GF1e %qp% "e1t:i1t"
+@ 
+We can call the \image, \contour~\persp~\method s on the resulting
+object. If we want to go to the native scale for the plot, the best
+way is to use the \changeScale~function of \STAR:\marginpar{\changeScale}
+<<changeScale on e1t:i1t, cache=true>>=
+term.e1i1 <- changeScale(term.e1ti1t, attr(m2u1,"qFct"), attr(m2ui,"qFct"))
+@ 
+The following commands:\marginpar{\image, \contour, \persp}
+<<prepare Fig e060824spont_1_GF1_terms3, echo=FALSE, results=hide>>=
+pdf(file="figs/e060824spont_1_GF1_terms3.pdf",width=10,height=10)
+layout(matrix(1:4,nr=2,byrow=TRUE))
+par(cex=1.5,mar=c(4,3,3,1))
+@ 
+<<do Fig e060824spont_1_GF1_terms3>>=
+image(term.e1ti1t)
+contour(term.e1ti1t,add=TRUE)
+contour(term.e1ti1t,levels=seq(-2,2,0.5),labcex=1.5,col=2)
+contour(term.e1ti1t,what="sd",levels=seq(-0.4,0.4,0.1),col=1,lty=2,add=TRUE)
+persp(term.e1ti1t,theta=-10,phi=30)
+persp(term.e1i1,theta=-25,phi=30,xlab="time since last (s)",ylab="last isi (s)",main="")
+@
+<<finish Fig e060824spont_1_GF1_terms3, echo=FALSE, results=hide>>=
+dev.off()
+@ 
+lead to the plots shown on Fig.~\ref{fig:e060824spont_1_GF1_terms3}.
+\begin{figure}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figs/e060824spont_1_GF1_terms3}
+  \caption{Examples of \image~(upper right), \contour~(upper row) and
+    \persp~(bottom row) \method s for \quickPredict~\object s.}
+  \label{fig:e060824spont_1_GF1_terms3}
+\end{figure}
+
+\subsubsection{Looking at the \InPr~of the two models}
+\label{sec:looking-at-intensity}
+  
+We conclude the analysis of the spike train of neuron 1 from the
+\texttt{e060824spont} data set by looking at the \InPr~obtained with
+our two models (with and without interaction) on a small part of the
+spike train. We first get the predicted value of $f_{\delta}$ of
+Eq.~\eqref{eq:9} on the logit scale for the second half of the second
+half of the data set using the fit obtained from the first half:
+<<get fdelta on logit scale, cache=true>>=
+eta1.e <- predict(GF1e,newdata=subset(DFA,time > 29.5))
+eta2.e <- predict(GF2e,newdata=subset(DFA,time > 29.5))
+@ 
+We then convert \texttt{eta1.e} and \texttt{eta2.e} into proper frequencies:
+<<get lambda, cache=TRUE>>=
+tigol <- function(x) exp(x)/(1+exp(x))
+lambda1.e <- tigol(eta1.e)/0.004
+lambda2.e <- tigol(eta2.e)/0.004
+@
+Then a plot showing the \InPr~of the two models is obtained with the
+following commands:
+<<prepare Fig e060824spont_1_GF1and2, echo=FALSE, results=hide>>=
+pdf(file="figs/e060824spont_1_GF1and2.pdf",width=12,height=8)
+par(cex=1.5)
+@ 
+<<do Fig e060824spont_1_GF1and2>>=
+with(subset(DFA,time>29.5),
+     plot(time,lambda1.e,
+          xlim=c(30.5,32),type="l",col=2,
+          xlab="Time (s)",
+          ylab=expression(lambda~"(Hz)"),
+          ylim=c(0,50),
+          lwd=2)
+     )
+with(subset(DFA,time>29.5),
+     lines(time,lambda2.e,xlim=c(30.5,32),
+           col=4,lty=2,lwd=2)
+     )
+with(subset(DFA,time>29.5),
+     rug(time[event==1],lwd=2)
+     )
+legend(30.5,45,
+       c("with interaction","without interaction"),
+       col=c(2,4),lty=c(1,2),lwd=c(2,2),bty="n")
+@ 
+<<finish Fig e060824spont_1_GF1and2, echo=FALSE, results=hide>>=
+dev.off()
+@ 
+The results appears on Fig.~\ref{fig:e060824spont_1_GF1and2}. Notice
+that the \InPr~of the ``best model'' (with interaction) is almost
+always larger than the one of the other model just before the spike
+while it tends to be smaller in between the spikes. In other words the
+best model predicts a lower event probability when there is actually no
+event and a larger probability when there are events.
+\begin{figure}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figs/e060824spont_1_GF1and2}
+  \caption{The \InPr~of the two considered models, with (red,
+    continuous) and without (blue, dashed) interactions between the
+    elapsed time since the last spike and the last \isi. The first
+    half ($\le$ 29.5 s) of the data set (\texttt{e060824spont}) was
+    fitted with both models.}
+  \label{fig:e060824spont_1_GF1and2}
+\end{figure} 
+
+\subsection{Checking the necessity of variable transformations}
+\label{sec:check-var-transformation}
+
+See the long version of the vignette on the STAR web
+site\footnote{\url{http://sites.google.com/site/spiketrainanalysiswithr/}}. 
+
+\section{Software versions used for this vignette}
+\label{sec:soft-versions-used}
+
+The versions of \R~and of the other packages used in this tutorial are
+obtained with function
+\textsf{sessionInfo}\index{sessionInfo}\index{R!sessionInfo}:
+<<sessionInfo, echo=FALSE>>=
+sessionInfo()
+@ 
+ 
+\pagebreak
+\bibliographystyle{plainnat}
+\bibliography{IEwSTARshortBib}
+
+\pagebreak
+
+\listoffigures
+
+\printindex
+
+<<reset options, echo=FALSE, results=hide>>=
+options(width=80)
+@ 
+\end{document}

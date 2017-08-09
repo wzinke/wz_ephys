@@ -1,0 +1,7 @@
+Condition	Frequency	Block	Timing File	TaskObject#1	TaskObject#2 	TaskObject#3
+1	1	1 	dimming	fix(0,0)	Sqr(1.5, [0.8 0.8 0.8], 1, 0, 0)	Sqr(1.5, [0.0 0.0 0.8], 1, 0, 0)
+2	1	1 	dimming	fix(0,0)	Sqr(1.5, [0.8 0.8 0.8], 1, 0, 0)	Sqr(1.5, [0.0 0.0 0.8], 1, 0, 0)
+3	1	1 	dimming	fix(0,0)	Sqr(1.5, [0.8 0.8 0.8], 1, 0, 0)	Sqr(1.5, [0.0 0.0 0.8], 1, 0, 0)
+4	1	1 	dimming	fix(0,0)	Sqr(1.5, [0.8 0.8 0.8], 1, 0, 0)	Sqr(1.5, [0.0 0.0 0.8], 1, 0, 0)
+5	1	1 	dimming	fix(0,0)	Sqr(1.5, [0.8 0.8 0.8], 1, 0, 0)	Sqr(1.5, [0.0 0.0 0.8], 1, 0, 0)
+6	1	1 	dimming	fix(0,0)	Sqr(1.5, [0.8 0.8 0.8], 1, 0, 0)	Sqr(1.5, [0.0 0.0 0.8], 1, 0, 0)

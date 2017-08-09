@@ -1,0 +1,53 @@
+#!/bin/bash
+#
+# get_unit_table
+#
+# created: 29.01.2015
+# by zinke
+#
+
+
+### quick hack to get a table based on a set of plexon files in the current directory
+# cd "/r4/schalllab/Users/Josh/Post\ 11-01-14\ data"
+# odir="/r4/schalllab/Users/Wolf"
+
+odir=$(pwd)
+Sofl="$odir/sessiontable.csv"
+Fofl="$odir/filetable.csv"
+
+fllst=$(ls *.plx)
+# cd Raw
+# fllst="$fllst $(ls *.plx)"
+
+echo -n "" > $odir/tmplst.dat
+echo -n "" > $odir/tmpfiles.dat
+
+for cflnm in $fllst
+do
+    cfl=$(echo "$cflnm" | cut -d. -f1 |  sed -e "s/_/-/g" |  sed -e "s/Uprobe-//g")
+
+    Nentries=$(echo "$cfl" | grep -o '-' | wc -l) # do not add one because first field is NHP
+
+    cDate=$( echo "$cfl" | rev | cut -d- -f1 | rev)
+    cNHP=$(  echo "$cfl" | cut -d- -f1)
+    cPRDGM=$(echo "$cfl" | cut -d- -f2)
+
+    Spec=$(echo "$cfl" | cut -d. -f1 | rev | cut -d- -f2- | rev | cut -d- -f3-)
+
+    if [ "X$Spec" == "X" ]
+    then
+        Spec='NA'
+    fi
+
+    sessSFX=${cDate:6:1}
+    if [ "X$sessSFX" == "X" ]
+    then
+        sessSFX='NA'
+    fi
+
+    echo "$cNHP ${cDate:4:2}-${cDate:0:2}-${cDate:2:2}" >> $odir/tmplst.dat
+    echo "$cNHP ${cDate:4:2}-${cDate:0:2}-${cDate:2:2} $cPRDGM $Spec $cflnm $sessSFX" >> $odir/tmpfiles.dat
+done
+
+cat $odir/tmpfiles.dat | sort -u > $Fofl
+cat $odir/tmplst.dat   | sort -u > $Sofl

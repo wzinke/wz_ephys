@@ -1,0 +1,4 @@
+Condition	Frequency	Block	Timing File	TaskObject#1	TaskObject#2 	TaskObject#3
+1	1	1 	change_rel	fix(0,0)	Sqr(4, [0.9 0.9 0.9], 1, 0, 0)	Sqr(4, [0.9 0.0 0.0], 1, 0, 0)
+2	1	2 	change_rel	fix(0,0)	Sqr(4, [0.9 0.9 0.9], 1, 0, 0)	Sqr(4, [0.9 0.0 0.0], 1, 0, 0)
+3	1	3 	change_rel	fix(0,0)	Sqr(4, [0.9 0.9 0.9], 1, 0, 0)	Sqr(4, [0.9 0.0 0.0], 1, 0, 0)

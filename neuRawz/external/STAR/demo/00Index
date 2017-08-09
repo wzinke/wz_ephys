@@ -1,0 +1,6 @@
+cockroachDataSet1	Use of the STAR functions on the first cockroach data set
+cockroachDataSet2	Use of the STAR functions on the second cockroach data set
+pkDataSet1		Use of STAR functions on the first Purkinje cells data set
+HMM			Use David Hart's HiddenMarkov package for HMM analysis
+Ogata1988		Replicates Fig. 2-13 of Ogata 1988
+gssCovProb		Use a parallel Monte Carlo method to estimate the empirical coverage prob. of gsspsth0 confidence bands

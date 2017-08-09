@@ -1,0 +1,232 @@
+useDynLib(STAR,
+          crossTight_sym=crossTight,
+          crossTightlog,
+          crossTightWithB,
+          crossTightWithBlog)
+
+import(survival,mgcv,R2HTML,graphics,stats)
+
+export(brt4df,
+       invgaussMLE,
+       gammaMLE,
+       llogisMLE,
+       lnormMLE,
+       rexpMLE,
+       weibullMLE,
+       is.durationFit,
+       qqDuration,
+       compModels,
+       dinvgauss,pinvgauss,hinvgauss,qinvgauss,rinvgauss,
+       dllogis,pllogis,hllogis,qllogis,rllogis,
+       drexp,prexp,hrexp,qrexp,rrexp,
+       hgamma,
+       hlnorm,
+       hweibull,
+       isiHistFit,
+       frt,"%frt%",
+       jsd,jpsth,jpsth2df,
+       lockedTrain,
+       mkDummy,
+       mkGLMdf,
+       rateEvolution,
+       mkREdf,
+       as.repeatedTrain,is.repeatedTrain,raster,
+       psth,df4counts,
+       reportHTML,
+       as.spikeTrain,is.spikeTrain,
+       varianceTime,is.varianceTime,
+       acf.spikeTrain,renewalTestPlot,
+       transformedTrain,
+       coef.durationFit,
+       logLik.durationFit,
+       print.spikeTrain,
+       summary.spikeTrain,
+       plot.spikeTrain,
+       diff.spikeTrain,
+       reportHTML.spikeTrain,
+       print.repeatedTrain,
+       summary.repeatedTrain,
+       plot.repeatedTrain,
+       reportHTML.repeatedTrain,
+       print.summary.repeatedTrain,
+       print.lockedTrain,
+       plot.lockedTrain,
+       hist.lockedTrain,
+       plot.hist.lockedTrain,
+       summary.transformedTrain,
+       plot.transformedTrain,
+       plot.psth,
+       plot.rateEvolution,
+       plot.varianceTime,
+       summary.frt,
+       plot.frt,
+       contour.jpsth,
+       image.jpsth,
+       persp.jpsth,
+       "[.spikeTrain",
+       gampsth,
+       gsspsth,
+       gsspsth0,
+       gamObj,
+       gssObj,
+       plot.gampsth,
+       print.gampsth,
+       summary.gampsth,
+       gamObj.gampsth,
+       plot.gsspsth,
+       print.gsspsth,
+       summary.gsspsth,
+       gssObj.gsspsth,
+       simulate.gsspsth,
+       plot.gsspsth0,
+       print.gsspsth0,
+       summary.gsspsth0,
+       gssObj.gsspsth0,
+       simulate.gsspsth0,
+       gamlockedTrain,
+       gsslockedTrain,
+       gsslockedTrain0,
+       print.gamlockedTrain,
+       summary.gamlockedTrain,
+       plot.gamlockedTrain,
+       gamObj.gamlockedTrain,
+       summary.gsslockedTrain,
+       plot.gsslockedTrain,
+       gssObj.gsslockedTrain,
+       summary.gsslockedTrain0,
+       plot.gsslockedTrain0,
+       gssObj.gsslockedTrain0,
+       reportHTML.gam,
+       crossTight,
+       mkTightBMtargetFct,
+       crossGeneral,
+       plot.FirstPassageTime,
+       lines.FirstPassageTime,
+       print.FirstPassageTime,
+       summary.FirstPassageTime,
+       mkCPSP,
+       print.CountingProcessSamplePath,
+       plot.CountingProcessSamplePath,
+       lines.CountingProcessSamplePath,
+       as.CPSP,
+       summary.CountingProcessSamplePath,
+       print.CountingProcessSamplePath.summary,
+       plot.CountingProcessSamplePath.summary,
+       "%tt%",
+       isi,
+       .mkDiscreteTrain,
+       quickPredict,
+       "%qp%",
+       plot.quickPredict,
+       lines.quickPredict,
+       image.quickPredict,
+       contour.quickPredict,
+       persp.quickPredict,
+       mkM2U,
+       mkAR,
+       changeScale,
+       plot.ssanova,
+       plot.ssanova0,
+       predictLogProb,
+       thinProcess,
+       maxIntensity,
+       mkSelf,
+       mkMappedI,
+       mkSimFct,
+       mkPostSimAnalysis
+       )
+
+S3method(plot,ssanova)
+S3method(plot,ssanova0)
+
+S3method(plot,quickPredict)
+S3method(lines,quickPredict)
+S3method(image,quickPredict)
+S3method(contour,quickPredict)
+S3method(persp,quickPredict)
+
+S3method(coef,durationFit)
+S3method(logLik,durationFit)
+
+
+S3method(print,spikeTrain)
+S3method(summary,spikeTrain)
+S3method(plot,spikeTrain)
+S3method(diff,spikeTrain)
+S3method(reportHTML,spikeTrain)
+S3method("[",spikeTrain)
+
+S3method(print,repeatedTrain)
+S3method(summary,repeatedTrain)
+S3method(plot,repeatedTrain)
+S3method(reportHTML,repeatedTrain)
+S3method(print,summary.repeatedTrain)
+
+S3method(print,lockedTrain)
+S3method(plot,lockedTrain)
+S3method(hist,lockedTrain)
+
+S3method(plot,hist.lockedTrain)
+
+S3method(print,gamlockedTrain)
+S3method(summary,gamlockedTrain)
+S3method(plot,gamlockedTrain)
+S3method(gamObj,gamlockedTrain)
+
+S3method(print,gsslockedTrain)
+S3method(summary,gsslockedTrain)
+S3method(plot,gsslockedTrain)
+S3method(gssObj,gsslockedTrain)
+
+S3method(print,gsslockedTrain0)
+S3method(summary,gsslockedTrain0)
+S3method(plot,gsslockedTrain0)
+S3method(gssObj,gsslockedTrain0)
+
+S3method(summary,transformedTrain)
+S3method(plot,transformedTrain)
+
+S3method(plot,psth)
+
+S3method(plot,rateEvolution)
+
+S3method(plot,varianceTime)
+
+S3method(plot,gampsth)
+S3method(print,gampsth)
+S3method(summary,gampsth)
+S3method(gamObj,gampsth)
+
+S3method(plot,gsspsth)
+S3method(print,gsspsth)
+S3method(summary,gsspsth)
+S3method(gssObj,gsspsth)
+S3method(simulate,gsspsth)
+
+S3method(plot,gsspsth0)
+S3method(print,gsspsth0)
+S3method(summary,gsspsth0)
+S3method(gssObj,gsspsth0)
+S3method(simulate,gsspsth0)
+
+S3method(summary,frt)
+S3method(plot,frt)
+
+S3method(contour,jpsth)
+S3method(image,jpsth)
+S3method(persp,jpsth)
+
+S3method(reportHTML,gam)
+
+S3method(plot,FirstPassageTime)
+S3method(lines,FirstPassageTime)
+S3method(print,FirstPassageTime)
+S3method(summary,FirstPassageTime)
+
+S3method(plot,CountingProcessSamplePath)
+S3method(lines,CountingProcessSamplePath)
+S3method(print,CountingProcessSamplePath)
+S3method(summary,CountingProcessSamplePath)
+
+S3method(plot,CountingProcessSamplePath.summary)
+S3method(print,CountingProcessSamplePath.summary)

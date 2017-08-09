@@ -1,0 +1,84 @@
+Thu Nov 8 19:11:00 CET, Christophe Pouzat <christophe.pouzat@gmail.com>
+	* DESCRIPTION: Version 0.3-7
+	* man: move the examples in crossGeneral and gsspsth in the "dontrun" category.
+	
+Thu Nov 8 12:32:00 CET, Christophe Pouzat <christophe.pouzat@gmail.com>
+	* DESCRIPTION: Version 0.3-6
+	* inst/doc: remove unecessary vignette source, updated vignette.
+	* vignettes: updated vignettes (minor changes) and bib file added.
+	* man: moves a lot of the examples in the "dontrun" category.
+	* R: Bug fix in plot.psth function thanks to Gregory Jefferis.
+	
+Wed Apr 11 15:42:00 CET, Christophe Pouzat <christophe.pouzat@gmail.com>
+	* DESCRIPTION: Version 0.3-5
+	* R: minor syntax fix (env= -> envir=, nr= -> nrow=). 
+
+Wed Apr 11 11:26:00 CET, Christophe Pouzat <christophe.pouzat@gmail.com>
+	* DESCRIPTION: Version 0.3-5
+	* inst/doc: remove vignette source.
+	* vignettes: add directory and copy vignette source into it. 
+	
+Tue Sep 29 11:00:00 CET, Christophe Pouzat <christophe.pouzat@gmail.com>
+	* DESCRIPTION: Version 0.3-4
+	* man: correct link problems for compatibility with next R version
+	(R-2.10) in files: changeScale.Rd, gssLockedTrain.Rd, mkM2U.Rd,
+	plot.ssanova.Rd. 
+
+Mon Sep 28 11:00:00 CET, Christophe Pouzat <christophe.pouzat@gmail.com>
+	* DESCRIPTION: Version 0.3-4
+	* man: correct a link in gsspsth.Rd
+	
+Fri Sep 25 15:00:00 CET, Christophe Pouzat <christophe.pouzat@gmail.com>
+	* DESCRIPTION: Version 0.3-3
+	* R: Added thinProcess, maxIntensity, mkSelf, mkMappedI, mkSimFct,
+	mkPostSimAnalysis. 
+	* man: corresponding documentation.
+
+Fri Aug 21 19:00:00 CET, Christophe Pouzat <christophe.pouzat@gmail.com>
+	* DESCRIPTION: Version 0.3-2
+	* inst/doc: change IEwSTAR.Rnw for IEwSTARshort.Rnw a shorter
+	version faster to regenerate.
+
+Thu Aug 20 17:00:00 CET, Christophe Pouzat <christophe.pouzat@gmail.com>
+	* DESCRIPTION: Version 0.3-1
+	* inst/doc: moved first vignette (PouzatChaffiolSTARdraft.Rnw) to
+	STAR website and removed it from the package. Add new vignette
+	IEwSTAR.Rnw
+	* R: Added quickPredict, %qp%, plot.quickPredict,
+	lines.quickPredict, image.quickPredict, contour.quickPredict,
+	persp.quickPredict, mkM2U, mkAR, changeScale, plot.ssanova,
+	plot.ssanova0, predictLogProb
+	* man: corresponding documentation
+
+Wed Dec 31 14:00:00 CET, Christophe Pouzat <christophe.pouzat@gmail.com>
+	* DESCRIPTION: Version 0.2-2
+	* inst/doc: Moved second vignette (OnCPtests.Rnw) to STAR website
+	and removed it from the package.
+	
+Tue Dec 23 21:00:00 CET, Christophe Pouzat <christophe.pouzat@gmail.com>
+
+	* DESCRIPTION: Version 0.2-1
+	* R: Added %tt% and isi codes in file gssmisc.R.
+	* man: corresponding documentation
+	* NAMESPACE: Added .mkDiscreteTrain 
+	* inst/doc: Updated PouzatChaffiol_STARdraft.Rnw and 
+	PouzatChaffiol_STARdraft.bib
+
+
+Thu Oct 27 17:00:00 CET, Christophe Pouzat <christophe.pouzat@gmail.com>
+
+	* DESCRIPTION: Version 0.2-0
+	* R: Added code for Wiener process first passage time through an
+	arbitrary boundary calculation. Change one hist call in function
+	psth in order to eliminate a bug in demo cockroachDataSet1. Added
+	code dealing with the new classes: CountingProcessSamplePath and
+	CountingProcessSamplePath.summary. An error in the sampling
+	variance of the variance of a normal distribution in function
+	varianceTime has been found and corrected by Chong Gu.   
+	* man: Corresponding documentation.
+	* src: New folder with C source code (crossTight.c) for the Wiener
+	process first passage time through the "tight" boundary: a +
+	b*sqrt(t)
+	* inst/doc: Typos corrected and some new figures in
+	PouzatChaffiol_STARdraft.Rnw, one reference added to
+	PouzatChaffiol_STARdraft.bib. Added OnCPtests.Rnw.

@@ -1,0 +1,14 @@
+NumberOfPoints: 507
+DataFile: data
+Dimentions: 10
+MinTemp: 0
+MaxTemp: 0.201
+TempStep: 0.01
+OutFile: data
+SWCycles: 100
+KNearestNeighbours: 11
+MSTree|
+DirectedGrowth|
+SaveSuscept|
+WriteLables|
+WriteCorFile~

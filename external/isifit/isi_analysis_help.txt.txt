@@ -1,0 +1,27 @@
+The isi distribution analysis uses the following files:
+   Example files of spike data to be fit:
+     mnar4u2_spikes.mat  - narrow spiking unit
+     mnar18u1_spikes.mat - broad spiking unit
+     mbbag40u2_spikes.mat - broad spiking unit
+     mbag15u1_spikes.mat - narrow spiking unit
+   fit_isi.m  -- main file that fits single and dual exponential models (with 
+                 gaussian refractory period -- similar to using sigmoidal recovery
+                 function where sigmoid is the integral of a gaussian).
+                 this routine will produce a plot of the fits to ISI distribution.
+                 
+NOTE:  this fitting procedure can be relatively slow, and therefore, once you
+figure out how to get it to work for one neuron, you may wish to run it in
+batch mode over night in order to do several neurons.
+                 
+To use the code in the ISI analysis:
+  In matlab:
+    > load mnar4u2_spikes;
+    > info = fit_isi(mnar4u2_spikes,2,1);
+See comments in fit_isi.m for more details of data format and options.   
+    
+
+Email Jude at jude@salk.edu if you have trouble using code, and be sure
+to have informative e-mail title since I delete tons of spam each day.
+
+    Jude
+    

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg preserveAspectRatio="xMinYMin meet" width="100%" height="100%" viewBox="0 0 700.000 525.000"  version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <desc>Matlab Figure Converted by PLOT2SVG written by Juerg Schwizer</desc>
+  <g id="topgroup">
+  <g id ="ID000000">
+  <clipPath id="ID000001">
+    <rect x="105.000" y="68.250" width="560.000" height="367.500"/>
+  </clipPath>
+    <g>
+<g id="ID000002" clip-path="url(#ID000001)" >
+<g>
+<circle cx="125.364" cy="252.106" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="135.545" cy="252.124" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="145.727" cy="252.161" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="155.909" cy="252.287" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="166.091" cy="252.705" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="176.273" cy="254.496" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="186.455" cy="260.619" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="196.636" cy="274.711" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="206.818" cy="296.962" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="217.000" cy="323.997" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="227.182" cy="355.436" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="237.364" cy="384.991" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="247.545" cy="392.045" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="257.727" cy="360.757" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="267.909" cy="297.385" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="278.091" cy="221.840" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="288.273" cy="154.244" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="298.455" cy="107.107" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="308.636" cy="84.002" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="318.818" cy="82.680" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="329.000" cy="97.438" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="339.182" cy="121.058" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="349.364" cy="147.235" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="359.545" cy="172.084" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="369.727" cy="193.929" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="379.909" cy="212.436" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="390.091" cy="227.850" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="400.273" cy="240.590" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="410.455" cy="251.078" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="420.636" cy="259.621" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="430.818" cy="266.521" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="441.000" cy="272.009" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="451.182" cy="276.257" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="461.364" cy="279.452" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="471.545" cy="281.751" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="481.727" cy="283.315" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="491.909" cy="284.268" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="502.091" cy="284.689" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="512.273" cy="284.691" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="522.455" cy="284.340" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="532.636" cy="283.692" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="542.818" cy="282.810" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="553.000" cy="281.732" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+<circle cx="563.182" cy="280.500" r="3.000" fill="none" stroke="#000000" stroke-width="2.0pt" />
+</g>
+</g>
+<g id="ID000003" >
+</g>
+    </g>
+  </g>
+  </g>
+</svg>
