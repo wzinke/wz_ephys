@@ -82,6 +82,17 @@ end
 %% convert spike times to ms
 spk_times = spk_times .* prec;
 
+
+% ========================================================================= 
+%% correct spike times by aligning them to an event specified by tzero.
+if(exist('tzero','var') && ~isempty(tzero))
+    spk_times = bsxfun(@minus,spk_times,tzero(:));
+    if(~isempty(clip))
+        SPKobj.clip = bsxfun(@minus, clip(:), tzero(:)); % correct the clipping times to be aligned as well
+    end
+end
+
+SPKobj.nTrials  = size(spk_times,1);
 % ========================================================================= 
 %% clip spike times
 if(exist('clip','var') && ~isempty(clip))
@@ -102,15 +113,6 @@ else
 end
 
 SPKobj.clipped = false;  % just keep information for clipping, but do not do that here.
-
-% ========================================================================= 
-%% correct spike times by aligning them to an event specified by tzero.
-if(exist('tzero','var') && ~isempty(tzero))
-    spk_times = bsxfun(@minus,spk_times,tzero(:));
-    if(~isempty(clip))
-        SPKobj.clip = bsxfun(@minus, clip(:), tzero(:)); % correct the clipping times to be aligned as well
-    end
-end
 
 % ========================================================================= 
 %% if not specified derive relevant time window from data

@@ -64,7 +64,7 @@ end
 %% apply convolution on the spike train matrix
 if(~isempty(spk.timewindow))
     spk.xtime = spk.timewindow(1) : spk.timewindow(2)+1;
-    spk.spikedensities = convn(spkt, krnl,'same') .* 1000; % multiply with 1000 to get it from spikes/ms to spikes/s.
+    spk.spikedensities = convn(spkt, krnl, 'same') .* 1000; % multiply with 1000 to get it from spikes/ms to spikes/s.
     if(spk.clipped)
         spk.spikedensities(bsxfun(@gt, spk.xtime, spk.clip(:)+kwdth)) = NaN;
     end
