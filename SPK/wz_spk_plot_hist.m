@@ -80,7 +80,6 @@ if(exist('sm','var') == 0 || isempty(sm) == 1)
     sm = 0;
 end
 
-
 tidx = 1:nTrials;
 
 if(exist('maxRast','var') == 0 || isempty(maxRast))
@@ -98,7 +97,6 @@ end
 %% time vector
 xhist = tmwin(1)-binwdth/2 : binwdth : tmwin(2)+binwdth/2;
 xvec  = xhist + binwdth/2;
-
 
 %% clip spike times
 if(~exist('clip','var'))
@@ -158,10 +156,10 @@ if(sm == 1)
         sm_ts = (spk.meandensity .* nTrials) ./ trialcnt;
     end
 
-    plot(spk.xtime, sm_ts, 'color', 'b' ,'Linewidth',2);
+    plot(spk.xtime, sm_ts, 'color', 'r' ,'Linewidth',1);
 end
 
-vline(median(EvTm(:)),'color','g', 'linewidth', 2);
+vline(median(EvTm(:)),'color','blue', 'linewidth', 2);
 
 %% plot spike raster
 if(maxRast > 0 && Rastratio > 0)

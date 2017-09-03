@@ -1,8 +1,0 @@
-Condition	Frequency	Block	Timing File	TaskObject#1	TaskObject#2 	TaskObject#3
-1	1	1 	dimming_9pt	fix(0,0)	Gen(GoSqr, 0, 0)	Gen(NoGoSqr, 0, 0)
-2	1	1 	dimming_9pt	fix(0,0)	Gen(GoSqr, 0, 0)	Gen(NoGoSqr, 0, 0)
-3	1	1 	dimming_9pt	fix(0,0)	Gen(GoSqr, 0, 0)	Gen(NoGoSqr, 0, 0)
-4	1	1 	dimming_9pt	fix(0,0)	Gen(GoSqr, 0, 0)	Gen(NoGoSqr, 0, 0)
-5	1	1 	dimming_9pt	fix(0,0)	Gen(GoSqr, 0, 0)	Gen(NoGoSqr, 0, 0)
-6	1	1 	dimming_9pt	fix(0,0)	Gen(GoSqr, 0, 0)	Gen(NoGoSqr, 0, 0)
-
