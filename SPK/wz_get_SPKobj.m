@@ -82,6 +82,9 @@ end
 %% convert spike times to ms
 spk_times = spk_times .* prec;
 
+if(size(spk_times,1) > 1)
+    spk_times = spk_times';
+end
 
 % ========================================================================= 
 %% correct spike times by aligning them to an event specified by tzero.

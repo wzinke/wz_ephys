@@ -30,7 +30,7 @@ function plxMat = PLX_get_paradigm(plxMat, EV, rig, NHP, keep_sess, skip_waves, 
 %
 %       keep_nonstim  - do not discard trials with no stimulus onset
 %
-%       ITIstim         - check for stimulation codes during the inter trial interval
+%       ITIstim       - check for stimulation codes during the inter trial interval
 %
 % .........................................................................
 % wolf zinke, wolfzinke@gmail.com

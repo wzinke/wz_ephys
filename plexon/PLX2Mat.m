@@ -179,10 +179,12 @@ else
     Tchan = EV.EV_channel;
     Pchan = EV.PD_channel;
 end
+
 % ____________________________________________________________________________ %
 %% get information about the analog channels
 % Identify active analog channels and get time of recording onset
 plxMat.ActAD  = find([plx.ContinuousChannels(:).Enabled] == 1);
+
 for(c=length(plxMat.ActAD):1) % make sure that active channels really contain data
     if(isempty(plx.ContinuousChannels(plxMat.ActAD(c)).Fragments))
         plxMat.ActAD(c) = [];
@@ -239,7 +241,7 @@ end
 % ____________________________________________________________________________ %
 %% re-order Event codes and times into a trial matrix
 if(keep_sess ~= 2)
-    disp(['Determining event trial positions ']); tic;
+    disp('Determining event trial positions '); tic;
     
     % get trial event codes
     if(isfield(plxMat.EV,'TrialStart_'))
