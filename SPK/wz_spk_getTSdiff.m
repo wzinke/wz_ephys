@@ -1,6 +1,6 @@
 function [TDTvec, TDTci] = wz_spk_getTSdiff(dvals, thrval, minseq, uBnd, lBnd, xdata)
 % wz_spk_getTSdiff - identify the time point here a signal in a time series
-%                    exceds a specified threshold for a sufficient number
+%                    exceeds a specified threshold for a sufficient number
 %                    of subsequent time bins
 %
 % DESCRIPTION
@@ -52,7 +52,7 @@ end
 
 %% if dvals is a vector and upper and lower bounds are specified determine CI
 if(length(TDTvec) ==1 && ~isnan(TDTvec(1)))
-    
+
     if(exist('lBnd','var') && ~isempty(lBnd))
         if(isfinite(TDTest))
             sigpos = xdata(find(lBnd > thrval & xdata < TDTvec,1,'last')+1);
@@ -61,7 +61,7 @@ if(length(TDTvec) ==1 && ~isnan(TDTvec(1)))
             end
         end
     end
-    
+
     if(exist('uBnd','var') && ~isempty(uBnd))
         if(isfinite(TDTest))
             sigpos = xdata(find(uBnd < thrval & xdata > TDTvec,1,'first'));
