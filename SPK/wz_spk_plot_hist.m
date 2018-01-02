@@ -1,4 +1,4 @@
-function wz_spk_plot_hist(spktimes, tmwin, maxY, EvTm, binwdth, sm, maxRast, Rastratio, clip, trialorder)
+function [rasterstart] = wz_spk_plot_hist(spktimes, tmwin, maxY, EvTm, binwdth, sm, maxRast, Rastratio, clip, trialorder)
 % Plot a peri event histogram..
 %
 % DESCRIPTION
@@ -142,7 +142,7 @@ end
 bar(xvec, spkhist,'k','EdgeColor', 'k', 'BarWidth', 1);
 hold on;
 
-if(sm == 1)
+if(sm == 1 && ~isempty(spktimes))
 %     [f,xi] = ksdensity(spktimes(:),'bandwidth',binwdth);
 %     f = f * sum(isnan(spktimes(:)))*nTrials;
     spk = wz_spk_density(spktimes, 'gauss', binwdth);
@@ -159,7 +159,9 @@ if(sm == 1)
     plot(spk.xtime, sm_ts, 'color', 'r' ,'Linewidth',1);
 end
 
-vline(median(EvTm(:)),'color','blue', 'linewidth', 2);
+plot([median(EvTm(:)), median(EvTm(:))], [0, maxY], 'color', 'blue', 'linewidth', 1.5);
+
+rasterstart = maxY;
 
 %% plot spike raster
 if(maxRast > 0 && Rastratio > 0)

@@ -30,9 +30,12 @@ end
 
 %% check data input
 if(~isstruct(spk))
-    if(length(unique(spk(~isnan(spk)))) > 2)
+%     if(length(unique(spk(~isnan(spk)))) > 2)
         spk = wz_get_SPKobj(spk);
-    end
+%     else
+%         spk = [];
+%         return;
+%     end
 % else
 %     if(isfield(spk,'spiketimes') && ~isfield(spk,'spiketrain'))
 %         spk = wz_get_SPKobj(spk.spiketimes);
@@ -45,11 +48,11 @@ krnl = wz_spk_kernel(ktype, kwdth);
 % if spike times have been clipped, set spiketrain to NaN after last spike
 % occurrence, but correct for the kernel width.
 if(doclip == 1 && ~isempty(spk.clip))
-    [spk.spiketimes, spk.trial_order] = wz_spk_clip(spk.spiketimes,spk.clip);
+    [spk.spiketimes, spk.trial_order] = wz_spk_clip(spk.spiketimes, spk.clip);
 
     for(t=1:spk.nTrials)
         %p = ~isnan(spk.spiketimes(t,:));
-        spk.spiketimes(t, 1:sum(~isnan(spk.spiketimes(t,:)))) = spk.spiketimes(t,~isnan(spk.spiketimes(t,:)));
+        spk.spiketimes(t, 1:sum(~isnan(spk.spiketimes(t,:)))) = spk.spiketimes(t, ~isnan(spk.spiketimes(t,:)));
 %         spk.spiketrain(t,:)  =  histc(spk.spiketimes(t,~isnan(spk.spiketimes(t,:))), spk.xtime);
     end
     spk.clipped = true;
@@ -62,12 +65,19 @@ else
 end
 
 %% apply convolution on the spike train matrix
-if(~isempty(spk.timewindow))
+if(~isempty(spk) && ~isempty(spk.timewindow))
     spk.xtime = spk.timewindow(1) : spk.timewindow(2)+1;
-    spk.spikedensities = convn(spkt, krnl, 'same') .* 1000; % multiply with 1000 to get it from spikes/ms to spikes/s.
+    
+    %spk.spikedensities = convn(spkt, krnl, 'same') .* 1000; % multiply with 1000 to get it from spikes/ms to spikes/s.
+    
+    for(i=1:size(spkt,1))
+        spk.spikedensities(i,:) = conv(spkt(i,:), krnl, 'same') .* 1000; % multiply with 1000 to get it from spikes/ms to spikes/s.
+    end    
+    
     if(spk.clipped)
         spk.spikedensities(bsxfun(@gt, spk.xtime, spk.clip(:)+kwdth)) = NaN;
     end
+    
     spk.Ndense = sum(~isnan(spk.spikedensities));
 else
     spk.xtime = [];

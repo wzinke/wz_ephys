@@ -7,9 +7,9 @@ function SPKobj = wz_get_SPKobj(spk_times, tmwin, tzero, clip, na_val, prec, res
 % keeping several relevant descriptors of the data in a single variable.
 % 
 % SYNTAX 
-% SPKobj = wz_get_SPKobj(spk_times, tmwin, tzero, clip, na_val, prec, reso)
+%   SPKobj = wz_get_SPKobj(spk_times, tmwin, tzero, clip, na_val, prec, reso)
 %
-%   Input:
+% INPUT
 %         <spk_times> should be a 2D matrix containing spike timies with rows representing
 %                     trials. If spike times of 0 occurr they will be ignored (replaced by NaN).
 % 
@@ -146,8 +146,11 @@ SPKobj.traintime  = [tmwin(1)-reso : reso : tmwin(2)];
 SPKobj.spiketrain = nan(SPKobj.nTrials, length(SPKobj.traintime));
 
 for(t=1:SPKobj.nTrials)
-    p = ~isnan(spk_times(t,:));
-    SPKobj.spiketrain(t,:)  =  hist(spk_times(t, p), SPKobj.traintime);
+    cSpk = spk_times(t,:);
+    cSpk(isnan(cSpk)) = [];
+    cSpk(cSpk < SPKobj.traintime(1) | cSpk > SPKobj.traintime(end)) = [];
+    
+    SPKobj.spiketrain(t,:) = hist(cSpk, SPKobj.traintime);
 end
 
 % ========================================================================= 
