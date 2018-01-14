@@ -88,7 +88,12 @@ end
 % ========================================================================= 
 %% correct spike times by aligning them to an event specified by tzero.
 if(exist('tzero','var') && ~isempty(tzero))
-    spk_times = bsxfun(@minus,spk_times,tzero(:));
+    if(~isempty(spk_times))
+        spk_times = bsxfun(@minus, spk_times, tzero(:));
+    else
+        spk_times = NaN * tzero(:);
+    end
+    
     if(~isempty(clip))
         SPKobj.clip = bsxfun(@minus, clip(:), tzero(:)); % correct the clipping times to be aligned as well
     end
