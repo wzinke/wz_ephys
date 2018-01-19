@@ -66,7 +66,7 @@ end
 
 %% apply convolution on the spike train matrix
 if(~isempty(spk) && ~isempty(spk.timewindow))
-    spk.xtime = spk.timewindow(1) : spk.timewindow(2)+1;
+    spk.xtime = spk.timewindow(1) : spk.timewindow(2);
     
     %spk.spikedensities = convn(spkt, krnl, 'same') .* 1000; % multiply with 1000 to get it from spikes/ms to spikes/s.
     
@@ -88,8 +88,8 @@ end
 spk.kerneltype  = ktype;
 spk.kernelwidth = kwdth;
 spk.kernel      = krnl;
-spk.nBoot = rep;
-num_trial = size(spkt,1);  % might need correction to account for trials with different duration
+spk.nBoot       = rep;
+num_trial       = size(spkt,1);  % might need correction to account for trials with different duration
 
 %% get mean density
 if(num_trial > 1)

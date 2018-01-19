@@ -139,43 +139,53 @@ if(exist('maxY','var') == 0 || isempty(maxY) == 1)
 end
 
 %% plot histogram
-bar(xvec, spkhist,'k','EdgeColor', 'k', 'BarWidth', 1);
-hold on;
+if(Rastratio ~= 1)
+    bar(xvec, spkhist,'k','EdgeColor', 'k', 'BarWidth', 1);
+    hold on;
+    
+    if(sm == 1 && ~isempty(spktimes))
+    %     [f,xi] = ksdensity(spktimes(:),'bandwidth',binwdth);
+    %     f = f * sum(isnan(spktimes(:)))*nTrials;
+        spk = wz_spk_density(spktimes, 'gauss', binwdth);
 
-if(sm == 1 && ~isempty(spktimes))
-%     [f,xi] = ksdensity(spktimes(:),'bandwidth',binwdth);
-%     f = f * sum(isnan(spktimes(:)))*nTrials;
-    spk = wz_spk_density(spktimes, 'gauss', binwdth);
+        sm_ts = spk.meandensity;
 
-    sm_ts = spk.meandensity;
+        if(length(clip) == nTrials)
+            trialcnt = bsxfun(@le, spk.xtime, clip);
+            trialcnt = sum(trialcnt);
 
-    if(length(clip) == nTrials)
-        trialcnt = bsxfun(@le, spk.xtime, clip);
-        trialcnt = sum(trialcnt);
+            sm_ts = (spk.meandensity .* nTrials) ./ trialcnt;
+        end
 
-        sm_ts = (spk.meandensity .* nTrials) ./ trialcnt;
+        plot(spk.xtime, sm_ts, 'color', 'r' ,'Linewidth',1);
     end
 
-    plot(spk.xtime, sm_ts, 'color', 'r' ,'Linewidth',1);
+    plot([median(EvTm(:)), median(EvTm(:))], [0, maxY], 'color', 'blue', 'linewidth', 1.5);
+
+    rasterstart = maxY;
+else
+    rasterstart = 0;
+    maxY = 0;
 end
-
-plot([median(EvTm(:)), median(EvTm(:))], [0, maxY], 'color', 'blue', 'linewidth', 1.5);
-
-rasterstart = maxY;
 
 %% plot spike raster
 if(maxRast > 0 && Rastratio > 0)
     if(~isempty(spktimes))
 
-        tstep = (Rastratio * maxY)/(maxRast+2);
-
-        ctrial = maxY + tstep;
-        maxY = ctrial;
+        % tstep = (Rastratio * maxY)/(maxRast+2);
+        if(Rastratio < 1)
+            tstep = ((rasterstart/(1-Rastratio)) * Rastratio) / (maxRast+2);
+        else
+            tstep = 1;
+        end
+        
+        ctrial = rasterstart;
+        
         for(s=1:maxRast)
             if(s > nTrials)
                 break;
             end
-            ctrial  = ctrial + tstep;
+            ctrial = ctrial + tstep;
             tpos = trialorder(tidx(s));
             cspikes = spktimes(tpos,:);
             cspikes(isnan(cspikes)) = [];
@@ -186,14 +196,24 @@ if(maxRast > 0 && Rastratio > 0)
                 plot([clip(tpos), clip(tpos)],[ctrial-tstep/2, ctrial+tstep/2],'-r', 'LineWidth',2.5);
             end
         end
-        maxY = maxY + Rastratio * maxY;
+        
+        maxY = ctrial + tstep;
+    end
+    
+    if(Rastratio == 1)
+        plot([median(EvTm(:)), median(EvTm(:))], [0, maxY], 'color', 'blue', 'linewidth', 1.5);
     end
 end
 
 xlim(tmwin);
 ylim([0, maxY]);
 
-ylabel('firing rate [spikes/s]');
+if(Rastratio == 1)
+    ylabel('trial number');
+else
+    ylabel('firing rate [spikes/s]');
+end
+
 xlabel('time [ms]');
 set(gca,'TickDir','out');
 

@@ -1,4 +1,4 @@
-function printpdf(h,outfilename)
+function printpdf(h, outfilename)
 set(h, 'PaperUnits','centimeters');
 set(h, 'Units','centimeters');
 pos=get(h,'Position');
