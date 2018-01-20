@@ -8,7 +8,7 @@ function [out_mat, valcnt] = wz_cropNaN(in_mat, minval, maxval, tonan)
 % SYNTAX 
 % [out_mat, valcnt] = wz_cropNaN(in_mat, minval, maxval, tonan)
 
-%   Input:
+% INPUT
 %       in_mat  2D matrix to be cropped.
 %
 %       minval  Lower threshold of valid values. Only data that is larger
@@ -25,7 +25,6 @@ function [out_mat, valcnt] = wz_cropNaN(in_mat, minval, maxval, tonan)
 %
 %       valcnt    coeeficient of variation
 %
-% REFERENCES 
 %
 % ......................................................................... 
 % wolf zinke, wolfzinke@gmail.com 
@@ -41,7 +40,7 @@ if(exist('minval','var') && ~isempty(minval))
 end
 
 if(exist('maxval','var') && ~isempty(maxval))
-    in_mat(in_mat >= maxval) = NaN;
+    in_mat(in_mat > maxval) = NaN;
 end
 
 if(exist('tonan','var') && ~isempty(tonan))

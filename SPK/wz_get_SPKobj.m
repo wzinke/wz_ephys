@@ -148,7 +148,7 @@ end
 % ========================================================================= 
 %% get the spike time matrix and spike train matrix
 SPKobj.resolution = reso;
-SPKobj.traintime  = tmwin(1)-reso : reso : tmwin(2);
+SPKobj.traintime  = tmwin(1) : reso : tmwin(2);
 SPKobj.spiketrain = nan(SPKobj.nTrials, length(SPKobj.traintime));
 
 for(t=1:SPKobj.nTrials)
